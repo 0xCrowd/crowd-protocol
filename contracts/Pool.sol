@@ -1,37 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-import "./util_libs/AddressSet.sol";
-import "./util_libs/UintSet.sol";
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Pool {
     /*
-    Grouping all data types that are supposed to go together into one 32 byte slot, and declare them one after
-    another in your code. It is important to group data types together as the EVM stores the variables 
-    one after another in the given order. This is only done for state variables and inside of structs. 
-    Arrays consist of only one data type, so there is no ordering necessary.
     */
     address public owner;
     address public initiator;
 
-    using AddressSet for AddressSet.Set;
-    using UintSet for UintSet.Set;
-    
-
-    constructor(address _initiator){
-        owner = msg.sender;
-        initiator = _initiator;
-
-        // hardcoded for now
-    }
-
-    //AddressSet.Set userSet;
-    //AddressSet.Set nftSet;
-    //UintSet.Set partySet;
     event NewDeposit(IERC721 indexed nftAddress, uint indexed nftId, address sender, uint deposit);
-    event NewParty(IERC721 indexed nftAddress, uint indexed nftId, uint indexed pool_id);
+    event NewParty(IERC721 indexed nftAddress, uint indexed nftId, uint indexed lastPartyId);
     event PoolEnd(IERC721 indexed nftAddress, uint nftId, address sender);
     // If all participants took they ETH back from the party.
     event PoolForcedEnd(IERC721 indexed nftAddress, uint nftId, address sender);
@@ -44,24 +24,32 @@ contract Pool {
         uint nftId;
         uint totalDeposit;
         bool isClosed;
-    }
-
-    struct User {
-        uint totalDeposit;
-        mapping(uint => uint) partyToAmount;
-        address[] daosHistory;
+        address[] participants;
     }
 
     struct LotToken {
-        AddressSet.Set applicants;
-        UintSet.Set parties;
+        uint totalDeposit;
+        uint[] parties;
     }
 
     uint public lastPartyId;
-    mapping(uint => Party) parties;
-    mapping(uint => AddressSet.Set) partyParticipants;
-    mapping(address => User) users;
-    mapping(IERC721 => mapping(uint => LotToken)) nfts;
+    mapping(uint => Party) public parties;
+    // Map pool_id => user address => absolute deposit amount.
+    mapping(uint => mapping(address => uint)) shares;
+    //mapping(address => mapping(uint => uint)) userTotalInParty;
+    mapping(IERC721 => mapping(uint => LotToken)) lotInfo;
+    mapping(uint => mapping(address => bool)) isUserInParty;
+    mapping(IERC721 => mapping(uint => mapping(address => bool))) isUserInToken;
+    // Map users to all DAOs they've ever participated.
+    mapping(address => address[]) userToDaos;
+
+    modifier initiatorOnly {require(msg.sender == initiator); _;}
+
+    constructor(address _initiator) {
+        owner = msg.sender;
+        initiator = _initiator;
+    }
+
 
     // *** Setter Methods ***
     function setParty(IERC721 _nftAddress, 
@@ -70,12 +58,13 @@ contract Pool {
                        string memory _ticker
                        ) public returns (uint) {
         /*
-        Create a new party.
+        Register a new party.
         */
-        require(!nfts[_nftAddress][_nftId].applicants.exists(msg.sender), 
+        require(!isUserInToken[_nftAddress][_nftId][msg.sender], 
                                                     "Message sender already participates the payback of the token");
         lastPartyId++;
         Party storage party = parties[lastPartyId];
+        address[] memory empty;
         party.partyName = _partyName;
         party.creator = msg.sender;
         party.ticker = _ticker;
@@ -83,6 +72,7 @@ contract Pool {
         party.nftId = _nftId;
         party.totalDeposit = 0;
         party.isClosed = false;
+        party.participants = empty;
 
         emit NewParty(_nftAddress, _nftId, lastPartyId);
         return lastPartyId;
@@ -97,12 +87,10 @@ contract Pool {
         // Update Party profile.
         Party storage party = parties[_partyId];
         party.totalDeposit += msg.value;
-        // Update Party - Participants mapping.
-        partyParticipants[_partyId].update(msg.sender);
-        // Update User profile.
-        User storage user = users[msg.sender];
-        user.totalDeposit += msg.value;
-        user.partyToAmount[_partyId] += msg.value;
+        // Check whether the user is already saved as a participat.
+        if (shares[_partyId][msg.sender] == 0) {
+            party.participants.push(msg.sender);
+        }
         // Update Lot profile.
         LotToken storage lot = nfts[party.nftAddress][party.nftId];
         lot.applicants.update(msg.sender);
@@ -112,39 +100,61 @@ contract Pool {
     }
 
     // *** Getter Methods ***
-    function getPartyDescription(uint _party_id) public view returns (string memory, string memory) {
-        return (parties[_party_id].partyName, parties[_party_id].ticker);
+    function getPartyDescription(uint _partyId) external view returns (string memory, string memory) {
+        return (parties[_partyId].partyName, parties[_partyId].ticker);
     }
 
-    function getParty(uint _party_id) public view returns (Party memory) {
+    function getParty(uint _party_id) external view returns (Party memory) {
         return parties[_party_id];
     }
 
-    function getUserPartyStatus(uint _party_id, address _user) public view returns (bool) {
+    function getUserPartyStatus(uint _partyId, address _user) external view returns (bool) {
         /*
         Check whether the user already participantes the party.
         */
-        return partyParticipants[_party_id].exists(_user);
+        return (shares[_partyId][_user] != 0);
     }
 
-    function getTotalUserDeposit(uint _party_id, address _user) public view returns (uint) {
+    function getTotalUserDeposit(uint _partyId, address _user) external view returns (uint) {
         /*
         Get the absolute amount of WEI deposited by the specified user to the target `IERC721` token.
         */
-        return users[_user].partyToAmount[_party_id];
+        return shares[_partyId][_user];
     }
 
-    function getTotalTokenDeposit(uint _pool_id) public view returns (uint) {
+    function getTotalTokenDeposit(uint _partyId) external view returns (uint) {
         /*
         Get the total deposit sum for the Party.
         */
-        return parties[_pool_id].totalDeposit;
+        return parties[_partyId].totalDeposit;
     }
 
     // *** Payable Methods ***
-    //function returnDeposit(){}
+    //function returnDeposit() payable {}
+    /*
+    function distributeDaoTokens(uint _partyId, address _daoAddress, IERC20 _daoToken) public {
+        require(parties[_partyId].closed == false, "This pool is closed");
+        parties[_partyId].closed = true;
+        uint k = _daoToken.totalSupply() / parties[_partyId].total;
+        Party storage pool = parties[_partyId];
+        Dao dao = Dao(_daoAddress);
+        _dao_token.approve(_daoAddress, _daoToken.totalSupply());
+        for (uint i = 0; i < pools[_partyId].participants.length; i++) {
+            address recipient = pool.participants[i];
+            dao.auto_stake(shares[_partyId][recipient]*k, recipient);
+            user_to_daos[recipient].push(_daoAddress);
+        }
+    }
+    */
 
-    // *** Delete Methods ***
-    //funtion delParty()
+    function get_user_daos(address _user) public returns (address[] memory){
+        return userToDaos[_user];
+    }
+
+    function get_funds_for_buyout(uint _partyId) public initiatorOnly {
+        (bool sent, bytes memory data) = initiator.call{value: _partyId}("");
+    }
+
+
 
 }
