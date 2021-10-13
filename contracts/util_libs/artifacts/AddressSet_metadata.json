@@ -1,0 +1,59 @@
+{
+	"compiler": {
+		"version": "0.8.0+commit.c7dfd78e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"exists(AddressSet.Set storage,address)": {
+					"params": {
+						"key": "value to check. ",
+						"self": "storage pointer to a Set."
+					},
+					"returns": {
+						"_0": "bool true: Set member, false: not a Set member."
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"exists(AddressSet.Set storage,address)": {
+					"notice": "check if a key is in the Set."
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/util_libs/AddressSet.sol": "AddressSet"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/util_libs/AddressSet.sol": {
+			"keccak256": "0xc29cd5a4b25a3cc2320520f9435d18ec04e2dc57dfcdffd775642900869af8dd",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b95c98e1c8800ea36fb13a32f1ff302a11c1cd687094a1114d9eca9154ddaf08",
+				"dweb:/ipfs/QmTNCt7XDt6Q3Z3x3spDed2r69bgVy6wDfCcdXWKYXafzY"
+			]
+		}
+	},
+	"version": 1
+}
