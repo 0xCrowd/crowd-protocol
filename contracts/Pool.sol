@@ -27,19 +27,13 @@ contract Pool {
         address[] participants;
     }
 
-    struct LotToken {
-        uint totalDeposit;
-        uint[] parties;
-    }
-
     uint public lastPartyId;
     mapping(uint => Party) public parties;
     // Map pool_id => user address => absolute deposit amount.
     mapping(uint => mapping(address => uint)) shares;
     //mapping(address => mapping(uint => uint)) userTotalInParty;
-    mapping(IERC721 => mapping(uint => LotToken)) lotInfo;
-    mapping(uint => mapping(address => bool)) isUserInParty;
-    mapping(IERC721 => mapping(uint => mapping(address => bool))) isUserInToken;
+    //mapping(uint => mapping(address => bool)) isUserInLotParty;
+    mapping(IERC721 => mapping(uint => mapping(address => uint))) userToLotParty;
     // Map users to all DAOs they've ever participated.
     mapping(address => address[]) userToDaos;
 
@@ -60,7 +54,7 @@ contract Pool {
         /*
         Register a new party.
         */
-        require(!isUserInToken[_nftAddress][_nftId][msg.sender], 
+        require(userToLotParty[_nftAddress][_nftId][msg.sender] !=0, 
                                                     "Message sender already participates the payback of the token");
         lastPartyId++;
         Party storage party = parties[lastPartyId];
@@ -84,17 +78,22 @@ contract Pool {
         */
         require(_partyId <= lastPartyId, "This party doesn't exist");
         require(parties[_partyId].isClosed == false, "This pool is closed");
-        // Update Party profile.
+        //
         Party storage party = parties[_partyId];
-        party.totalDeposit += msg.value;
-        // Check whether the user is already saved as a participat.
-        if (shares[_partyId][msg.sender] == 0) {
+        uint userTokenParty = userToLotParty[party.nftAddress][party.nftId][msg.sender];
+        // Check whether the user already tries to but the token as a memeber of a different party. 
+        if (userTokenParty == 0) {
+            userTokenParty = _partyId;
+            // Store user addres as a participat.
             party.participants.push(msg.sender);
+
+        } else {
+            require(userTokenParty == _partyId, "Message sender already participates the payback of the token");
         }
-        // Update Lot profile.
-        LotToken storage lot = nfts[party.nftAddress][party.nftId];
-        lot.applicants.update(msg.sender);
-        lot.parties.update(_partyId);
+        userToLotParty[party.nftAddress][party.nftId][msg.sender] = userTokenParty;
+        party.totalDeposit += msg.value;
+        //
+        shares[_partyId][msg.sender] += msg.value;
         //
         emit NewDeposit(party.nftAddress, party.nftId, msg.sender, msg.value);
     }
@@ -129,32 +128,35 @@ contract Pool {
         return parties[_partyId].totalDeposit;
     }
 
-    // *** Payable Methods ***
-    //function returnDeposit() payable {}
-    /*
-    function distributeDaoTokens(uint _partyId, address _daoAddress, IERC20 _daoToken) public {
-        require(parties[_partyId].closed == false, "This pool is closed");
-        parties[_partyId].closed = true;
-        uint k = _daoToken.totalSupply() / parties[_partyId].total;
-        Party storage pool = parties[_partyId];
-        Dao dao = Dao(_daoAddress);
-        _dao_token.approve(_daoAddress, _daoToken.totalSupply());
-        for (uint i = 0; i < pools[_partyId].participants.length; i++) {
-            address recipient = pool.participants[i];
-            dao.auto_stake(shares[_partyId][recipient]*k, recipient);
-            user_to_daos[recipient].push(_daoAddress);
-        }
-    }
-    */
-
-    function get_user_daos(address _user) public returns (address[] memory){
+    function getUserDaos(address _user) public view returns (address[] memory) {
         return userToDaos[_user];
     }
 
-    function get_funds_for_buyout(uint _partyId) public initiatorOnly {
+    function getFundsForBuyout(uint _partyId) public initiatorOnly {
         (bool sent, bytes memory data) = initiator.call{value: _partyId}("");
     }
 
+
+    // *** Payable Methods ***
+
+
+    //function returnDeposit() payable {}
+
+    /*
+    function distributeDaoTokens(uint _partyId, address _daoAddress, IERC20 _daoToken) public {
+        require(parties[_partyId].closed == false, "This pool is closed");
+        parties[_partyId].isClosed = true;
+        uint k = _daoToken.totalSupply() / parties[_partyId].totalDeposit;
+        Party storage party = parties[_partyId];
+        Dao dao = Dao(_daoAddress);
+        _daoToken.approve(_daoAddress, _daoToken.totalSupply());
+        for (uint i = 0; i < parties[_partyId].participants.length; i++) {
+            address recipient = party.participants[i];
+            dao.auto_stake(shares[_partyId][recipient]*k, recipient);
+            userToDaos[recipient].push(_daoAddress);
+        }
+    }
+    */
 
 
 }

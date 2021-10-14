@@ -369,7 +369,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/PoolX.sol": "Pool"
+			"contracts/Pool.sol": "Pool"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -407,7 +407,7 @@
 				"dweb:/ipfs/QmcsVgLgzWdor3UnAztUkXKNGcysm1MPneWksF72AvnwBx"
 			]
 		},
-		"contracts/PoolX.sol": {
+		"contracts/Pool.sol": {
 			"keccak256": "0x693ea06fd1164f5fd2b5cf6f71e22390472e920048a80f538fd56e332c8177ff",
 			"license": "MIT",
 			"urls": [
