@@ -8,7 +8,7 @@ contract Pool {
     /*
     */
     address public owner;
-    address public initiator;
+    address payable public initiator;
 
     event NewDeposit(IERC721 indexed nftAddress, uint indexed nftId, address sender, uint deposit);
     event NewParty(IERC721 indexed nftAddress, uint indexed nftId, uint indexed lastPartyId);
@@ -132,15 +132,34 @@ contract Pool {
         return userToDaos[_user];
     }
 
+    // *** Money Transfer Methods ***
+
     function getFundsForBuyout(uint _partyId) public initiatorOnly {
         (bool sent, bytes memory data) = initiator.call{value: _partyId}("");
     }
 
+    function returnDeposit(uint _partyId, uint _amount) public initiatorOnly {
+        /*
+        */
+        uint userTotal = shares[_partyId][initiator];
+        uint withdrawAmount;
+        if (userTotal < _amount) { 
+            withdrawAmount = userTotal;
+        } else {
+            withdrawAmount = _amount;
+            }
+        updateStatsAndTransfer(_partyId, initiator, withdrawAmount);
 
-    // *** Payable Methods ***
+    }
 
-
-    //function returnDeposit() payable {}
+    function updateStatsAndTransfer(uint _partyId, address payable _user, uint _amount) private {
+        /*
+        */
+        shares[_partyId][_user] -= _amount;
+        parties[_partyId].totalDeposit -= _amount;
+        userToLotParty[parties[_partyId].nftAddress][parties[_partyId].nftId][_user] -= _amount;
+        _user.transfer(_amount);
+    }
 
     /*
     function distributeDaoTokens(uint _partyId, address _daoAddress, IERC20 _daoToken) public {
