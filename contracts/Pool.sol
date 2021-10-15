@@ -1,52 +1,53 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol";
 
-contract Pool {
+contract Pool is Initializable {
     /*
     */
     address public owner;
-    address payable public initiator;
-
-    event NewDeposit(IERC721 indexed nftAddress, uint indexed nftId, address sender, uint deposit);
-    event NewParty(IERC721 indexed nftAddress, uint indexed nftId, uint indexed lastPartyId);
-    event PoolEnd(IERC721 indexed nftAddress, uint nftId, address sender);
-    // If all participants took they ETH back from the party.
-    event PoolForcedEnd(IERC721 indexed nftAddress, uint nftId, address sender);
+    address public initiator;
+    uint public lastPartyId;
 
     struct Party {
         string partyName;
         address creator;
         string ticker;
-        IERC721 nftAddress;
+        IERC721Upgradeable nftAddress;
         uint nftId;
         uint totalDeposit;
         bool isClosed;
         address[] participants;
     }
 
-    uint public lastPartyId;
     mapping(uint => Party) public parties;
     // Map pool_id => user address => absolute deposit amount.
-    mapping(uint => mapping(address => uint)) shares;
+    mapping(uint => mapping(address => uint)) public shares;
     //mapping(address => mapping(uint => uint)) userTotalInParty;
     //mapping(uint => mapping(address => bool)) isUserInLotParty;
-    mapping(IERC721 => mapping(uint => mapping(address => uint))) userToLotParty;
+    mapping(IERC721Upgradeable => mapping(uint => mapping(address => uint))) public userToLotParty;
     // Map users to all DAOs they've ever participated.
-    mapping(address => address[]) userToDaos;
+    mapping(address => address[]) public userToDaos;
+    
+    event NewDeposit(IERC721Upgradeable indexed nftAddress, uint indexed nftId, address sender, uint deposit);
+    event NewParty(IERC721Upgradeable indexed nftAddress, uint indexed nftId, uint indexed lastPartyId);
+    event PoolEnd(IERC721Upgradeable indexed nftAddress, uint nftId, address sender);
+    // If all participants took they ETH back from the party.
+    event PoolForcedEnd(IERC721Upgradeable indexed nftAddress, uint nftId, address sender);
 
     modifier initiatorOnly {require(msg.sender == initiator); _;}
-
-    constructor(address _initiator) {
+    constructor() initializer {}
+    
+    function initialize(address _initiator) public initializer {
         owner = msg.sender;
         initiator = _initiator;
     }
-
-
+    
     // *** Setter Methods ***
-    function setParty(IERC721 _nftAddress, 
+    function setParty(IERC721Upgradeable _nftAddress, 
                        uint _nftId, 
                        string memory _partyName, 
                        string memory _ticker
@@ -54,7 +55,7 @@ contract Pool {
         /*
         Register a new party.
         */
-        require(userToLotParty[_nftAddress][_nftId][msg.sender] !=0, 
+        require(userToLotParty[_nftAddress][_nftId][msg.sender] == 0, 
                                                     "Message sender already participates the payback of the token");
         lastPartyId++;
         Party storage party = parties[lastPartyId];
@@ -134,8 +135,10 @@ contract Pool {
 
     // *** Money Transfer Methods ***
 
-    function getFundsForBuyout(uint _partyId) public initiatorOnly {
-        (bool sent, bytes memory data) = initiator.call{value: _partyId}("");
+    function getFundsForBuyout(uint _partyId) public initiatorOnly returns (bool sent, bytes memory data){
+        // Error: Avoid to use low level calls.
+        (sent, data) = initiator.call{value: _partyId}("");
+        return (sent, data);
     }
 
     function returnDeposit(uint _partyId, uint _amount) public initiatorOnly {
@@ -152,17 +155,18 @@ contract Pool {
 
     }
 
-    function updateStatsAndTransfer(uint _partyId, address payable _user, uint _amount) private {
+    function updateStatsAndTransfer(uint _partyId, address _user, uint _amount) private {
         /*
         */
         shares[_partyId][_user] -= _amount;
         parties[_partyId].totalDeposit -= _amount;
         userToLotParty[parties[_partyId].nftAddress][parties[_partyId].nftId][_user] -= _amount;
-        _user.transfer(_amount);
+        payable(_user).transfer(_amount);
     }
 
     /*
-    function distributeDaoTokens(uint _partyId, address _daoAddress, IERC20 _daoToken) public {
+    // Import Dao contract after uncommenting this function.
+    function distributeDaoTokens(uint _partyId, address _daoAddress, IERC20Upgradeable _daoToken) public {
         require(parties[_partyId].closed == false, "This pool is closed");
         parties[_partyId].isClosed = true;
         uint k = _daoToken.totalSupply() / parties[_partyId].totalDeposit;
