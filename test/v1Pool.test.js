@@ -1,11 +1,11 @@
 const truffleAssert = require('truffle-assertions');
 
-const Pool = artifacts.require("Pool");
+const Pool = artifacts.require("v1Pool");
 
 
 contract('CrowdTest', ([deployer, initiator, a, b, c]) => {
     before(async () => {
-        pool = await Pool.new("0xF52B67C2241B0F7ab3b7643a0c78DAd0cB39a6A4");
+        pool = await Pool.new();
     })
 
     describe("Testing Pool", async () => {
@@ -14,6 +14,11 @@ contract('CrowdTest', ([deployer, initiator, a, b, c]) => {
             deposit_b = web3.utils.toWei("0.03", "ether")
             deposit_c = web3.utils.toWei("0.04", "ether")
         })
+        it('Initizlizes', async () => {
+            await pool.initialize("0xF52B67C2241B0F7ab3b7643a0c78DAd0cB39a6A4");
+            expect(await pool.initiator === "0xF52B67C2241B0F7ab3b7643a0c78DAd0cB39a6A4");
+        }
+        )
         it('Creates new party', async () => {
             tx = await pool.new_party(mock_nft.address, 1, party_name, ticker);
             truffleAssert.eventEmitted(tx,
