@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "./CRUD.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol";
 
-contract Pool is Initializable {
+contract Pool is Initializable, CRUD {
     /*
     */
     address public owner;
@@ -23,6 +24,7 @@ contract Pool is Initializable {
         address[] participants;
     }
 
+    CRUD crud = new CRUD();
     mapping(uint => Party) public parties;
     // Map pool_id => user address => absolute deposit amount.
     mapping(uint => mapping(address => uint)) public shares;
@@ -39,7 +41,6 @@ contract Pool is Initializable {
     event PoolForcedEnd(IERC721Upgradeable indexed nftAddress, uint nftId, address sender);
 
     modifier initiatorOnly {require(msg.sender == initiator); _;}
-    constructor() initializer {}
     
     function initialize(address _initiator) public initializer {
         owner = msg.sender;
@@ -68,7 +69,8 @@ contract Pool is Initializable {
         party.totalDeposit = 0;
         party.isClosed = false;
         party.participants = empty;
-
+        // Add party to the index.
+        crud.create(true, lastPartyId);
         emit NewParty(_nftAddress, _nftId, lastPartyId);
         return lastPartyId;
     }
@@ -85,9 +87,8 @@ contract Pool is Initializable {
         // Check whether the user already tries to but the token as a memeber of a different party. 
         if (userTokenParty == 0) {
             userTokenParty = _partyId;
-            // Store user addres as a participat.
+            // Store user address as a participant.
             party.participants.push(msg.sender);
-
         } else {
             require(userTokenParty == _partyId, "Message sender already participates the payback of the token");
         }
@@ -133,6 +134,10 @@ contract Pool is Initializable {
         return userToDaos[_user];
     }
 
+    function getCrudStorage() public view returns (CRUD.Instance[] memory){
+        return crud.readAll();
+    }
+
     // *** Money Transfer Methods ***
 
     function getFundsForBuyout(uint _partyId) public initiatorOnly returns (bool sent, bytes memory data){
@@ -152,7 +157,6 @@ contract Pool is Initializable {
             withdrawAmount = _amount;
             }
         updateStatsAndTransfer(_partyId, initiator, withdrawAmount);
-
     }
 
     function updateStatsAndTransfer(uint _partyId, address _user, uint _amount) private {
@@ -161,11 +165,16 @@ contract Pool is Initializable {
         shares[_partyId][_user] -= _amount;
         parties[_partyId].totalDeposit -= _amount;
         userToLotParty[parties[_partyId].nftAddress][parties[_partyId].nftId][_user] -= _amount;
+        // Workaround, should be refactored.
+        if (parties[_partyId].totalDeposit <= 0) {
+            crud.del(_partyId);
+            parties[_partyId].isClosed = true;
+        }
         payable(_user).transfer(_amount);
     }
 
     /*
-    // Import Dao contract after uncommenting this function.
+    // Uncomment this function after importing DAO.
     function distributeDaoTokens(uint _partyId, address _daoAddress, IERC20Upgradeable _daoToken) public {
         require(parties[_partyId].closed == false, "This pool is closed");
         parties[_partyId].isClosed = true;
