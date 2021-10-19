@@ -5,10 +5,13 @@ import "./CRUD.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract Pool is Initializable {
     /*
     */
+    using SafeMath for uint;
+    
     address private owner;
     address public initiator;
     uint public lastPartyId;
@@ -95,9 +98,9 @@ contract Pool is Initializable {
             require(userTokenParty == _partyId, "Message sender already participates the payback of the token");
         }
         userToLotParty[party.nftAddress][party.nftId][msg.sender] = userTokenParty;
-        party.totalDeposit += msg.value;
+        party.totalDeposit = party.totalDeposit.add(msg.value);
         //
-        shares[_partyId][msg.sender] += msg.value;
+        shares[_partyId][msg.sender] = shares[_partyId][msg.sender].add(msg.value);
         //
         emit NewDeposit(party.nftAddress, party.nftId, msg.sender, msg.value);
     }
@@ -136,8 +139,12 @@ contract Pool is Initializable {
         return userToDaos[_user];
     }
     
-    function getActiveParties() public view returns (CRUD){
-        return crud;
+    function getActiveParties() public view returns (CRUD.Instance[] memory){
+        return crud.readAll();
+    }
+    
+    function getBalance() public view returns (uint) {
+        return address(this).balance;
     }
 
     // *** Money Transfer Methods ***
@@ -148,7 +155,7 @@ contract Pool is Initializable {
         return (sent, data);
     }
 
-    function returnDeposit(uint _partyId, uint _amount) public initiatorOnly {
+    function returnDeposit(uint _partyId, uint _amount) public payable initiatorOnly {
         /*
         */
         uint userTotal = shares[_partyId][initiator];
@@ -161,12 +168,16 @@ contract Pool is Initializable {
         updateStatsAndTransfer(_partyId, initiator, withdrawAmount);
     }
 
-    function updateStatsAndTransfer(uint _partyId, address _user, uint _amount) private {
+    function updateStatsAndTransfer(uint _partyId, address _user, uint _amount) public payable initiatorOnly {
         /*
         */
-        shares[_partyId][_user] -= _amount;
-        parties[_partyId].totalDeposit -= _amount;
-        userToLotParty[parties[_partyId].nftAddress][parties[_partyId].nftId][_user] -= _amount;
+        Party storage party  = parties[_partyId];
+        //
+        shares[_partyId][_user] = shares[_partyId][_user].sub(_amount);
+        //
+        party.totalDeposit = party.totalDeposit.sub(_amount);
+        //
+        userToLotParty[party.nftAddress][party.nftId][_user] = userToLotParty[party.nftAddress][party.nftId][_user].sub(_amount);
         // Workaround, should be refactored.
         if (parties[_partyId].totalDeposit <= 0) {
             crud.del(_partyId);
@@ -176,13 +187,14 @@ contract Pool is Initializable {
     }
 
     /*
-    // Uncomment this function after importing DAO.
+    // Uncomment this function after creating asset storage.
+
     function distributeDaoTokens(uint _partyId, address _daoAddress, IERC20Upgradeable _daoToken) public {
         require(parties[_partyId].closed == false, "This pool is closed");
         parties[_partyId].isClosed = true;
         uint k = _daoToken.totalSupply() / parties[_partyId].totalDeposit;
         Party storage party = parties[_partyId];
-        Dao dao = Dao(_daoAddress);
+        Dao dao = Dao(_dasssoAddress);
         _daoToken.approve(_daoAddress, _daoToken.totalSupply());
         for (uint i = 0; i < parties[_partyId].participants.length; i++) {
             address recipient = party.participants[i];
