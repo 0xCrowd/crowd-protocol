@@ -6,10 +6,10 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol";
 
-contract Pool is Initializable, CRUD {
+contract Pool is Initializable {
     /*
     */
-    address public owner;
+    address private owner;
     address public initiator;
     uint public lastPartyId;
 
@@ -40,13 +40,15 @@ contract Pool is Initializable, CRUD {
     // If all participants took they ETH back from the party.
     event PoolForcedEnd(IERC721Upgradeable indexed nftAddress, uint nftId, address sender);
 
-    modifier initiatorOnly {require(msg.sender == initiator); _;}
+    modifier initiatorOnly {
+        require(msg.sender == initiator); _;}
     
     function initialize(address _initiator) public initializer {
         owner = msg.sender;
         initiator = _initiator;
+
     }
-    
+
     // *** Setter Methods ***
     function setParty(IERC721Upgradeable _nftAddress, 
                        uint _nftId, 
@@ -133,9 +135,9 @@ contract Pool is Initializable, CRUD {
     function getUserDaos(address _user) public view returns (address[] memory) {
         return userToDaos[_user];
     }
-
-    function getCrudStorage() public view returns (CRUD.Instance[] memory){
-        return crud.readAll();
+    
+    function getActiveParties() public view returns (CRUD){
+        return crud;
     }
 
     // *** Money Transfer Methods ***
