@@ -24,8 +24,11 @@ contract Pool is Initializable {
     modifier initiatorOnly {
         require(msg.sender == initiator); _;}
     
-    function initialize(address _owner) internal initializer {owner = _owner;}
-    function initiate(address _initiator) public {initiator = _initiator;}
+    function initialize(address _owner, address _user, uint _payment, uint _goal) internal initializer {
+        owner = _owner;
+        goal = _goal;
+        }
+    //function initiate(address _initiator) public {initiator = _initiator;}
 
     // *** Setter Methods ***
 
@@ -33,10 +36,11 @@ contract Pool is Initializable {
         /*
         Receive the payment and update the pool statistics.
         */
+        require(total+msg.value <= goal, "The deposit is too big");
         totalDeposit += msg.value;
         shares[_user] += msg.value;
         //
-        emit NewDeposit(party.nftAddress, party.nftId, msg.sender, msg.value);
+        emit NewDeposit(party.nftAddress, party.nftId, _user, msg.value);
     }
 
     // *** Getter Methods ***
@@ -61,6 +65,10 @@ contract Pool is Initializable {
         (sent, data) = initiator.call{value: _partyId}("");
         return (sent, data);
     }*/
+
+    function returnExtraMoney(address _message_sender, uint _amount) internal {
+
+    }
 
     function returnDeposit(address _message_sender, uint _amount) public  {
         /*

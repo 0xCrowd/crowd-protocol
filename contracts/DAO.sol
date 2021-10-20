@@ -5,14 +5,15 @@ import "./DAOToken.sol"
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
 
-contract DAO is Initializable {
+contract DAO is Initializable, IERC721Receiver {
     /* 
     There are 3 stages of pool:
     */ 
     // cбор, сбор закончен, сбор отменен
-    enum poolStages{IN_PROGRESS, FULL, FAILED}
+    enum poolStages{IN_PROGRESS, FULL}
 
     struct Asset {
         address addr;  // Address of stored asset
@@ -31,8 +32,8 @@ contract DAO is Initializable {
     uint goal;
     ERC20 dao_token;
 
-    modifier poolStages(Stages _stage) {
-        require(stage == _stage);
+    modifier onlyFull(Stages _stage) {
+        require(stage ==  Stages.FULL);
         _;}
 
     modifier transitionAfter() {
@@ -55,11 +56,37 @@ contract DAO is Initializable {
         name = _name;
         
 
-    function recieve_money(address _user) public payable {
+    function getDeposit(address _user) public payable {
 
     }
 
-    function add_asset(address _asset_address, uint _asset_id) public {  // Check struct Asset for details
+    function stake(uint _amount, address stake_for) public onlyFull {
+        if (dao_token.allowance(stake_for, address(this)) < _amount) {
+            dao_token.approve(address(this), _amount);
+        }
+        dao_token.transferFrom(msg.sender, address(this), _amount);
+        stakes[stake_for] += _amount;
+    }
+
+    function auto_stake(uint _amount, address _stake_for) public onlyFull {
+        dao_token.transferFrom(address(pool_contract), address(this), _amount);
+        stakes[_stake_for] += _amount;
+    }
+
+    function get_stake(address _user) public view onlyFull returns (uint){
+        return stakes[_user];
+    }
+
+    function claim(uint _amount) public {  // 50
+        uint user_stake = stakes[msg.sender];  // 2
+        if (user_stake < _amount) {  // 2*50 < 50
+            dao_token.transfer(msg.sender, user_stake);
+        } else {
+            dao_token.transfer(msg.sender, _amount);
+            }
+    }
+
+    function addAsset(address _asset_address, uint _asset_id) public onlyFull {  // Check struct Asset for details
         require(vault.asset_locked[_asset_address][_asset_id] == false, "This asset is already locked");
         if (_asset_id != 0) {  // NFT
             IERC721 asset = IERC721(_asset_address);
@@ -71,7 +98,7 @@ contract DAO is Initializable {
         vault.asset_locked[_asset_address][_asset_id] = true;
     }
 
-    function get_asset(uint _asset_type) public view returns(Asset[] memory) {
+    function getAsset(uint _asset_type) public view onlyFull returns(Asset[] memory) {
         /*
         Get locked assets. UI should iterate over them checking the owner is this DAO
         _asset_type: 0 - "erc721" / 1 - "erc20"
