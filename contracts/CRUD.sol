@@ -5,23 +5,23 @@ contract CRUD{
 
     struct Instance{
         uint id;
-        bool isActive;
+        address addr;
     }
    
     Instance[] public sequence;
 
-    function create(bool _isActive, uint _nextId) public {
-        sequence.push(Instance(_nextId, _isActive));
+    function create(uint _id, address addr) public {
+        sequence.push(Instance(_id, addr));
     }
    
-    function read(uint _id) public view returns(uint, bool){
+    function read(uint _id) public view returns(address){
         require(sequence[_id].id == _id);
-        return(sequence[_id].id, sequence[_id].isActive);
+        return sequence[_id].addr;
     }
    
-    function update(uint _id, bool _isActive) public {
+    function update(uint _id, address _addr) public {
         require(sequence[_id].id == _id);
-        sequence[_id].isActive = _isActive;
+        sequence[_id].addr = _addr;
     }
    
     function del(uint _id) public {

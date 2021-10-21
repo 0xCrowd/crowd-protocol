@@ -11,17 +11,16 @@ contract Factory is Initializable{
 
     address public initiator;  // Offchain initiator
     address owner;  // Will allow to setup offchain initiator
-    uint dao_count;
+    uint daoCount;
     CRUD daos = new CRUD();
-    // Mapping NFT to daos trying to buy it.
-//  require(userToLotParty[_nftAddress][_nftId][msg.sender] == 0, 
-//                                                    "Message sender already participates the payback of the token");
+
+    mapping(address => string) daoToCeramic;
     modifier ownerOnly {require(msg.sender == owner); _;}
     modifier initiatorOnly {require(msg.sender == initiator); _;}
 
 
     event NewDao(string name, address indexed dao);
-
+    event NewDeposit(uint daoId, address sender, uint deposit);
 
     function setup(address _new_initiator) public ownerOnly {
         if (_new_initiator != address(0x0)) {
@@ -29,23 +28,40 @@ contract Factory is Initializable{
         }
     }
 
-    function new_dao(IERC721Upgradeable _nftAddress,
-                uint _nftId, 
-                uint _goal,
-                string memory _DAOname, 
-                string memory _ticker) public payable {
-        dao_count++;
+    function initialize(address _owner) public initializer {
+        owner = _owner;
+    }
+
+    function new_dao(string memory _DAOname, 
+                string memory _ticker, _ceramicKey) public payable returns(uint) {
+        daoCount++;
         //  Building the brand new DAO.
         DAO dao;
         // Create DAO and the pool inside of it.
-        dao.initialize(msg.value, _DAOname, msg.sender, _ticker, dao_count, _shares_amount);
+        dao.initialize(msg.value, _DAOname, msg.sender, _ticker, daoCount, _shares_amount);
         // Send eth to the pool.
-        dao.pool.setDeposit(msg.sender);
-        emit NewDao(_DAOname, address(dao));
+        address daoAddr = address(dao);
+        // Map dao address to the specified ceramic key.
+        daoToCeramic[daoAddr] = _ceramicKey;
+        // Add dao addres and dao ID to dynamic array.
+        daos.create(daoCount, daoAddr);
+        emit NewDao(_DAOname, daoAddr);
+        return daoCount;
 
     }
+    function delegateToCeramic(address daoAddress) public returns(string) {
+        return daoToCeramic[daoAddress];
+    }
 
-    function get_dao(uint _id) public payable returns (bool) {
+    function getDao(uint _id) public returns (address) {
         return daos.read(_id);
+    }
+
+    function delDao(uint _id) public onlyOwner {
+        daos.del(_id);
+    }
+
+    function gelAllDaos() public returns (CRUD.Instance[]){
+        return daos.sequence;
     }
 }      
