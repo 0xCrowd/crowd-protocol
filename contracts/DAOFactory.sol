@@ -9,15 +9,11 @@ import "./DAOToken.sol";
 
 contract Factory is Initializable{
 
-    // mapping(das)
-    // that creates the party
     address public initiator;  // Offchain initiator
     address owner;  // Will allow to setup offchain initiator
     uint dao_count;
     CRUD daos = new CRUD();
     // Mapping NFT to daos trying to buy it.
-    // ToDo remove since NFTs should be stored in the internal DAO's vault
-    mapping(IERC721Upgradeable => mapping(uint => uint[])) public nftToDaos;
 //  require(userToLotParty[_nftAddress][_nftId][msg.sender] == 0, 
 //                                                    "Message sender already participates the payback of the token");
     modifier ownerOnly {require(msg.sender == owner); _;}
@@ -42,7 +38,7 @@ contract Factory is Initializable{
         //  Building the brand new DAO.
         DAO dao;
         // Create DAO and the pool inside of it.
-        dao.initialize(_nftAddress,_nftId, msg.value, _goal, msg.sender, _DAOname, _ticker);
+        dao.initialize(msg.value, _DAOname, msg.sender, _ticker, dao_count, _shares_amount);
         // Send eth to the pool.
         dao.pool.setDeposit(msg.sender);
         emit NewDao(_DAOname, address(dao));
