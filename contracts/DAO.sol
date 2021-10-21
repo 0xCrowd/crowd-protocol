@@ -50,7 +50,7 @@ contract DAO is Initializable, Ownable {
         // Update lock status.
         vault.assetLocked[tokenAddress] = true;
         // Add asset to the list of all assets.
-        vault.erc20.push(tokenAddress);
+        addErc20Asset(tokenAddress);
     }
 
     function recieveDeposit(address _user) public payable {
@@ -91,14 +91,14 @@ contract DAO is Initializable, Ownable {
             }
     }
 
-    function addErc20Asset(address _assetAddress) public onlyFull onlyOwner {  
-        require(vault.assetLocked[_assetAddress]== false, "This asset is already locked");
+    function addErc20Asset(address _assetAddress) public onlyOwner {  
+        require(vault.assetLocked[_assetAddress] == false, "This asset is already locked");
         vault.erc20.push(_assetAddress);
         vault.assetLocked[_assetAddress] = true;
     }
 
     
-    function getErc20Assets() public view onlyFull returns(address[] memory) {
+    function getErc20Assets() public view returns(address[] memory) {
         /*
         Get locked assets. UI should iterate over them checking the owner is this DAO
         */

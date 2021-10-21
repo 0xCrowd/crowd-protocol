@@ -32,10 +32,10 @@ contract Factory is Initializable{
         owner = _owner;
     }
 
-    function new_dao(string memory _DAOname, string memory _ticker, string memory _ceramicKey, uint _shares_amount) public payable returns(uint) {
+    function new_dao(string memory _DAOname, string memory _ticker, string memory _ceramicKey, uint _shares_amount) public payable returns(address) {
         daoCount++;
         //  Building the brand new DAO.
-        DAO dao;
+        DAO dao = new DAO();
         // Create DAO and the pool inside of it.
         dao.initialize(_DAOname, _ticker, _shares_amount);
         dao.recieveDeposit(msg.sender);
@@ -46,7 +46,7 @@ contract Factory is Initializable{
         // Add dao addres and dao ID to dynamic array.
         daos.create(daoCount, daoAddr);
         emit NewDao(_DAOname, daoAddr);
-        return daoCount;
+        return daoAddr;
 
     }
     function delegateToCeramic(address _daoAddress) public view returns(string memory) {

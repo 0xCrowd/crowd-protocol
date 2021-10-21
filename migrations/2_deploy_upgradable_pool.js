@@ -7,10 +7,10 @@ const { deployProxy, upgradeProxy } = require('@openzeppelin/truffle-upgrades');
 
 module.exports = async function (deployer) {
    await deployer.deploy(CRUD);
-   await deployer.deployProxy(DAOFactory, ["0x5B38Da6a701c568545dCfcB03FcB875f56beddC4"], { deployer, initializer: 'initialize' });
-   await deployer.deployProxy(DAO);
+   await deployer.deployProxy(DAO, ["TEST_NAME", "TEST_TICKER", 40], { deployer, initializer: 'initialize' });
    await deployer.deploy(DAOToken);
+   await deployer.deployProxy(DAOFactory, ["0x5B38Da6a701c568545dCfcB03FcB875f56beddC4"], { deployer, initializer: 'initialize' });
 
-   console.log("Factory:s", (await DAOFactory.deployed()).address);
+   console.log("Factory:", (await DAOFactory.deployed()).address);
    console.log("DAO:", (await DAO.deployed()).address);
 };
