@@ -47,9 +47,7 @@ contract DAO is Initializable, Ownable {
                 address(this));
         // Get token address.
         address tokenAddress = address(daoToken);   
-        // Update lock status.
-        vault.assetLocked[tokenAddress] = true;
-        // Add asset to the list of all assets.
+        //Add asset to the list of all assets.
         addErc20Asset(tokenAddress);
     }
 
@@ -63,6 +61,14 @@ contract DAO is Initializable, Ownable {
 
     function getTokenAddress() public view returns(address){
         return address(daoToken);
+    }
+    
+    function getUserDeposit(address _user) public view returns(uint) {
+        return userToEth[_user];
+    }
+    
+    function getBalance() public view returns (uint){
+        return address(this).balance;
     }
 
     function stake(uint _amount, address stake_for, address _user) public onlyFull {
