@@ -60,7 +60,7 @@ contract Factory is Initializable{
         daos.del(_id);
     }
 
-    function gelAllDaos() public returns (.sequence memory){
-        return daos.sequence;
+    function gelAllDaos() public returns (CRUD.Instance[] memory){
+        return daos.readAll();
     }
 }      

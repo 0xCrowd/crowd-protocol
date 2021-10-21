@@ -25,7 +25,7 @@ contract DAO is Initializable, Ownable {
     mapping(address => uint) userToEth;
     mapping(address => uint) stakes; 
     Vault vault;
-    address owner;
+    //address owner;
     Stages public stage = Stages.IN_PROGRESS;
     ERC20 daoToken;
     uint userCount;
