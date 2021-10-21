@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-import "./Pool.sol"
-import "./DAOToken.sol"
+import "./v1Pool.sol";
+import "./DAOToken.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol";
@@ -13,7 +13,7 @@ contract DAO is Initializable, IERC721Receiver {
     There are 3 stages of pool:
     */ 
     // cбор, сбор закончен, сбор отменен
-    enum poolStages{IN_PROGRESS, FULL}
+    enum poolStages{ IN_PROGRESS, FULL }
 
     struct Asset {
         address addr;  // Address of stored asset
@@ -27,38 +27,33 @@ contract DAO is Initializable, IERC721Receiver {
     }
 
     Vault vault;
-    tages public stage = Stages.IN_PROGRESS;
+    poolStages public stage = poolStages.IN_PROGRESS;
     Pool pool;
     uint goal;
     ERC20 dao_token;
 
-    modifier onlyFull(Stages _stage) {
-        require(stage ==  Stages.FULL);
-        _;}
-
-    modifier transitionAfter() {
-        _;
-        nextStage();
-    }
+    modifier onlyFull() { require(stage ==  Stages.FULL); _; }
+    modifier transitionAfter() { _; nextStage(); }
 
     function initialize (IERC721Upgradeable _nftAddress,
                 uint _nftId, 
                 uint _payment, // to create DAO you need to send the first payment
-                uint _goal,
-                address _creator,
+                // uint _goal,  // ToDo remove: Goal might be changed and will be got from the off-chain oracle.
+                // address _creator,  // ToDo no usage: Do we need creator?
                 string memory _name, 
                 string memory _ticker,
                 uint _daoId) internal initializer {
         
-        pool.initialize(_goal, _payment, _goal)
-        //
-        dao_token = new DAOToken(_name, _ticker, _shares_amount, address(pool));
+        pool.initialize(_goal, _payment, _goal);
+        dao_token = new DAOToken(
+                _name,
+                _ticker,
+                _shares_amount,  // ToDo initialize: We should discuss the amount of minted shares.
+                address(pool));
         name = _name;
-        
-
-    function getDeposit(address _user) public payable {
-
     }
+
+    function getDeposit(address _user) public payable {}
 
     function stake(uint _amount, address stake_for) public onlyFull {
         if (dao_token.allowance(stake_for, address(this)) < _amount) {
@@ -112,7 +107,5 @@ contract DAO is Initializable, IERC721Receiver {
         }
         Asset[] memory empty;
         return empty;
-    }
-
     }
 }

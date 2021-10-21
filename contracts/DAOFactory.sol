@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./DAO.sol"
+import "./DAO.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "./CRUD.sol";
-import "./DAOToken.sol"
+import "./DAOToken.sol";
 
 
 contract Factory is Initializable{
@@ -16,6 +16,7 @@ contract Factory is Initializable{
     uint dao_count;
     CRUD daos = new CRUD();
     // Mapping NFT to daos trying to buy it.
+    // ToDo remove since NFTs should be stored in the internal DAO's vault
     mapping(IERC721Upgradeable => mapping(uint => uint[])) public nftToDaos;
 //  require(userToLotParty[_nftAddress][_nftId][msg.sender] == 0, 
 //                                                    "Message sender already participates the payback of the token");
@@ -31,6 +32,7 @@ contract Factory is Initializable{
             initiator = _new_initiator;
         }
     }
+
     function new_dao(IERC721Upgradeable _nftAddress,
                 uint _nftId, 
                 uint _goal,
@@ -38,9 +40,9 @@ contract Factory is Initializable{
                 string memory _ticker) public payable {
         dao_count++;
         //  Building the brand new DAO.
-        Dad dao;
+        DAO dao;
         // Create DAO and the pool inside of it.
-        dao.initialize(_nftAddress,_nftId, msg.value, _goal, msg.sender, string memory _DAOname, string memory _ticker);
+        dao.initialize(_nftAddress,_nftId, msg.value, _goal, msg.sender, _DAOname, _ticker);
         // Send eth to the pool.
         dao.pool.setDeposit(msg.sender);
         emit NewDao(_DAOname, address(dao));

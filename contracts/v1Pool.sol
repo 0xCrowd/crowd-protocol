@@ -8,7 +8,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol"
 
 contract Pool is Initializable {
     /*
-    */    
+    */
     address private owner;
     address public initiator;
     uint public goal;
@@ -22,12 +22,17 @@ contract Pool is Initializable {
     event NewDeposit(IERC721Upgradeable indexed nftAddress, uint indexed nftId, address sender, uint deposit);
 
     modifier initiatorOnly {
-        require(msg.sender == initiator); _;}
-    
-    function initialize(address _owner, address _user, uint _payment, uint _goal) internal initializer {
+        require(msg.sender == initiator);
+        _;}
+
+    function initialize(
+        address _owner
+        // address _user, // ToDo remove: no usage
+        // uint _payment  // ToDo remove: no usage
+        // uint _goal  // ToDo remove: We do not need to specify goal it'll be produced offchain
+    ) internal initializer {
         owner = _owner;
-        goal = _goal;
-        }
+    }
     //function initiate(address _initiator) public {initiator = _initiator;}
 
     // *** Setter Methods ***
@@ -36,7 +41,7 @@ contract Pool is Initializable {
         /*
         Receive the payment and update the pool statistics.
         */
-        require(total+msg.value <= goal, "The deposit is too big");
+        require(total + msg.value <= goal, "The deposit is too big");
         totalDeposit += msg.value;
         shares[_user] += msg.value;
         //
@@ -70,17 +75,17 @@ contract Pool is Initializable {
 
     }
 
-    function returnDeposit(address _message_sender, uint _amount) public  {
+    function returnDeposit(address _message_sender, uint _amount) public {
         /*
         */
         uint userTotal = shares[_message_sender];
         require(userTotal > 0, "This user does not participate the party")
         uint withdrawAmount;
-        if (userTotal < _amount) { 
+        if (userTotal < _amount) {
             withdrawAmount = userTotal;
         } else {
             withdrawAmount = _amount;
-            }
+        }
         updateStatsAndTransfer(_partyId, initiator, withdrawAmount);
     }
 
