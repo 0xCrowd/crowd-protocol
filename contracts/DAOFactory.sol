@@ -37,7 +37,8 @@ contract Factory is Initializable{
         //  Building the brand new DAO.
         DAO dao;
         // Create DAO and the pool inside of it.
-        dao.initialize(msg.value, _DAOname, msg.sender, _ticker, daoCount, _shares_amount);
+        dao.initialize(_DAOname, _ticker, _shares_amount);
+        dao.recieveDeposit(msg.sender);
         // Send eth to the pool.
         address daoAddr = address(dao);
         // Map dao address to the specified ceramic key.
@@ -48,11 +49,11 @@ contract Factory is Initializable{
         return daoCount;
 
     }
-    function delegateToCeramic(address _daoAddress) public returns(string memory) {
+    function delegateToCeramic(address _daoAddress) public view returns(string memory) {
         return daoToCeramic[_daoAddress];
     }
 
-    function getDao(uint _id) public returns (address) {
+    function getDao(uint _id) public view returns (address) {
         return daos.read(_id);
     }
 
@@ -60,7 +61,7 @@ contract Factory is Initializable{
         daos.del(_id);
     }
 
-    function gelAllDaos() public returns (CRUD.Instance[] memory){
+    function gelAllDaos() public view returns (CRUD.Instance[] memory){
         return daos.readAll();
     }
 }      

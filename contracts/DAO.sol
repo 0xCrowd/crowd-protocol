@@ -36,8 +36,8 @@ contract DAO is Initializable, Ownable {
     modifier onlyFull() { require(stage ==  Stages.FULL); _; }
 
 
-    function initialize (uint _payment, string memory _name, address _user, string memory _ticker, uint _daoId, uint _shares_amount
-                        ) public payable initializer {
+    function initialize (string memory _name, string memory _ticker, uint _shares_amount
+                        ) public initializer {
         // Get DAO token.
         // Tokens are minted automatically after the contract initialization.
         daoToken = new DAOToken(
@@ -45,13 +45,8 @@ contract DAO is Initializable, Ownable {
                 _ticker,
                 _shares_amount,  // ToDo initialize: We should discuss the amount of minted shares.
                 address(this));
-        userCount++;
-        // Update user stats.
-        userToEth[_user] += _payment; 
-        // Add the user address to the dynamic array of users.
-        users.create(userCount, _user);
         // Get token address.
-        address tokenAddress = address(daoToken);
+        address tokenAddress = address(daoToken);   
         // Update lock status.
         vault.assetLocked[tokenAddress] = true;
         // Add asset to the list of all assets.
@@ -60,7 +55,9 @@ contract DAO is Initializable, Ownable {
 
     function recieveDeposit(address _user) public payable {
         userCount++;
+        // Add the user address to the dynamic array of users.
         users.create(userCount, _user);
+        // Update user stats.
         userToEth[_user] += msg.value; 
     }
 
@@ -86,11 +83,11 @@ contract DAO is Initializable, Ownable {
     }
 
     function claim(uint _amount, address _user) public {  // 50
-        uint userStake = stakes[msg.sender];  // 2
+        uint userStake = stakes[_user];  // 2
         if (userStake < _amount) {  // 2*50 < 50
-            daoToken.transfer(msg.sender, userStake);
+            daoToken.transfer(_user, userStake);
         } else {
-            daoToken.transfer(msg.sender, _amount);
+            daoToken.transfer(_user, _amount);
             }
     }
 
