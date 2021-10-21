@@ -32,8 +32,7 @@ contract Factory is Initializable{
         owner = _owner;
     }
 
-    function new_dao(string memory _DAOname, 
-                string memory _ticker, _ceramicKey) public payable returns(uint) {
+    function new_dao(string memory _DAOname, string memory _ticker, string memory _ceramicKey, uint _shares_amount) public payable returns(uint) {
         daoCount++;
         //  Building the brand new DAO.
         DAO dao;
@@ -49,19 +48,19 @@ contract Factory is Initializable{
         return daoCount;
 
     }
-    function delegateToCeramic(address daoAddress) public returns(string) {
-        return daoToCeramic[daoAddress];
+    function delegateToCeramic(address _daoAddress) public returns(string memory) {
+        return daoToCeramic[_daoAddress];
     }
 
     function getDao(uint _id) public returns (address) {
         return daos.read(_id);
     }
 
-    function delDao(uint _id) public onlyOwner {
+    function delDao(uint _id) public ownerOnly {
         daos.del(_id);
     }
 
-    function gelAllDaos() public returns (CRUD.Instance[]){
+    function gelAllDaos() public returns (.sequence memory){
         return daos.sequence;
     }
 }      

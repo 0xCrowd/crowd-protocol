@@ -23,20 +23,18 @@ contract DAO is Initializable, Ownable {
 
     CRUD users = new CRUD();
     mapping(address => uint) userToEth;
-    Vault public vault;
+    mapping(address => uint) stakes; 
+    Vault vault;
     address owner;
     Stages public stage = Stages.IN_PROGRESS;
     ERC20 daoToken;
     uint userCount;
     uint total;
+    
 
-    event DistributionDaoToken(IERC721 indexed nft_address, uint nft_id, address sender);
 
     modifier onlyFull() { require(stage ==  Stages.FULL); _; }
 
-    function nexStage() public onlyOwner{
-
-    }
 
     function initialize (uint _payment, string memory _name, address _user, string memory _ticker, uint _daoId, uint _shares_amount
                         ) public payable initializer {
@@ -66,7 +64,7 @@ contract DAO is Initializable, Ownable {
         userToEth[_user] += msg.value; 
     }
 
-    function tokenAddress() public view {
+    function getTokenAddress() public view returns(address){
         return address(daoToken);
     }
 
@@ -96,13 +94,14 @@ contract DAO is Initializable, Ownable {
             }
     }
 
-    function addErc20Asset(address _assetAddress) public onlyFull, onlyOwner {  
+    function addErc20Asset(address _assetAddress) public onlyFull onlyOwner {  
         require(vault.assetLocked[_assetAddress]== false, "This asset is already locked");
-        vault.erc20.push(Asset(_assetAddress));
+        vault.erc20.push(_assetAddress);
         vault.assetLocked[_assetAddress] = true;
     }
 
-    function getErc20Assets() public view onlyFull returns(Asset[] memory) {
+    
+    function getErc20Assets() public view onlyFull returns(address[] memory) {
         /*
         Get locked assets. UI should iterate over them checking the owner is this DAO
         */
@@ -110,17 +109,17 @@ contract DAO is Initializable, Ownable {
     }
 
     // Will be refactored
-    function distributeDaoTokens() public onlyFull, onlyOwner {
+    /*
+    function distributeDaoTokens() public onlyFull onlyOwner {
         uint k = daoToken.totalSupply() / parties[_partyId].totalDeposit;
         Party storage party = parties[_partyId];
-        Dao dao = Dao(_dasssoAddress);
         _daoToken.approve(_daoAddress, _daoToken.totalSupply());
         for (uint i = 0; i < parties[_partyId].participants.length; i++) {
             address recipient = party.participants[i];
             dao.auto_stake(shares[_partyId][recipient]*k, recipient);
             userToDaos[recipient].push(_daoAddress);
         }
-    }
+    }*/
 
     function nextStage() internal {
         stage = Stages(uint(stage) + 1);
