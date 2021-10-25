@@ -7,7 +7,7 @@ import "./CRUD.sol";
 import "./DAOToken.sol";
 
 
-contract Factory is Initializable{
+contract DAOFactory is Initializable{
 
     address public initiator;  // Offchain initiator
     address owner;  // Will allow to setup offchain initiator
@@ -28,11 +28,19 @@ contract Factory is Initializable{
         }
     }
 
-    function initialize(address _owner) public initializer {
+    // ToDo constructor is added to support non-upgradable deploy
+    constructor(address _owner, address _initiator) {
         owner = _owner;
+        initiator = _initiator;
     }
 
-    function new_dao(string memory _DAOname, string memory _ticker, string memory _ceramicKey, uint _shares_amount) public payable returns(address) {
+    // ToDo is it safe to make initial function public?
+    function initialize(address _owner, address _initiator) public initializer {
+        owner = _owner;
+        initiator = _initiator;
+    }
+
+    function new_dao(string memory _DAOname, string memory _ticker, uint _shares_amount) public payable returns(address) {
         daoCount++;
         //  Building the brand new DAO.
         DAO dao = new DAO();
@@ -41,14 +49,12 @@ contract Factory is Initializable{
         dao.recieveDeposit(msg.sender);
         // Send eth to the pool.
         address daoAddr = address(dao);
-        // Map dao address to the specified ceramic key.
-        daoToCeramic[daoAddr] = _ceramicKey;
         // Add dao addres and dao ID to dynamic array.
         daos.create(daoCount, daoAddr);
         emit NewDao(_DAOname, daoAddr);
         return daoAddr;
-
     }
+
     function delegateToCeramic(address _daoAddress) public view returns(string memory) {
         return daoToCeramic[_daoAddress];
     }
@@ -57,11 +63,11 @@ contract Factory is Initializable{
         return daos.read(_id);
     }
 
-    function delDao(uint _id) public ownerOnly {
+    function delDao(uint _id) public initiatorOnly {
         daos.del(_id);
     }
 
-    function gelAllDaos() public view returns (CRUD.Instance[] memory){
+    function getAllDaos() public view returns (CRUD.Instance[] memory){
         return daos.readAll();
     }
-}      
+}
