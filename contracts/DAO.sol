@@ -30,11 +30,8 @@ contract DAO is Initializable, Ownable {
     ERC20 daoToken;
     uint userCount;
     uint total;
-    
-
 
     modifier onlyFull() { require(stage ==  Stages.FULL); _; }
-
 
     function initialize (string memory _name, string memory _ticker, uint _shares_amount
                         ) public initializer {
