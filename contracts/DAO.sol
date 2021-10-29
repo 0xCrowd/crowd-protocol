@@ -2,14 +2,16 @@
 pragma solidity ^0.8.0;
 import "./DAOToken.sol";
 import "./CRUD.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+//import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol";
+//import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
 
-contract DAO is Initializable, Ownable {
+
+contract DAO is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     /* 
     Right now there are 2 stages of funding process:
     */ 
@@ -25,19 +27,21 @@ contract DAO is Initializable, Ownable {
     mapping(address => uint) userToEth;
     mapping(address => uint) stakes; 
     Vault vault;
-    //address owner;
     Stages public stage = Stages.IN_PROGRESS;
-    ERC20 daoToken;
+    DAOToken daoToken;
     uint userCount;
     uint total;
 
     modifier onlyFull() { require(stage ==  Stages.FULL); _; }
 
-    function initialize (string memory _name, string memory _ticker, uint _shares_amount
-                        ) public initializer {
+    function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
+
+    function initialize (string memory _name, string memory _ticker, 
+                        uint _shares_amount) public initializer {
         // Get DAO token.
         // Tokens are minted automatically after the contract initialization.
-        daoToken = new DAOToken(
+        daoToken = new DAOToken();
+        daoToken.initialize(
                 _name,
                 _ticker,
                 _shares_amount,  // ToDo initialize: We should discuss the amount of minted shares.
@@ -68,7 +72,8 @@ contract DAO is Initializable, Ownable {
         return address(this).balance;
     }
 
-    function stake(uint _amount, address stake_for, address _user) public onlyFull {
+    function stake(uint _amount, address stake_for, 
+                    address _user) public onlyFull {
         if (daoToken.allowance(_user, address(this)) < _amount) {
             daoToken.approve(address(this), _amount);
         }
@@ -95,11 +100,11 @@ contract DAO is Initializable, Ownable {
     }
 
     function addErc20Asset(address _assetAddress) public onlyOwner {  
-        require(vault.assetLocked[_assetAddress] == false, "This asset is already locked");
+        require(vault.assetLocked[_assetAddress] == false, 
+        "This asset is already locked");
         vault.erc20.push(_assetAddress);
         vault.assetLocked[_assetAddress] = true;
     }
-
     
     function getErc20Assets() public view returns(address[] memory) {
         /*

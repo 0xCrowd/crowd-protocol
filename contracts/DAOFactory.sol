@@ -2,45 +2,44 @@
 pragma solidity ^0.8.0;
 
 import "./DAO.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "./CRUD.sol";
 import "./DAOToken.sol";
 
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-contract DAOFactory is Initializable{
+
+contract DAOFactory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 
     address public initiator;  // Offchain initiator
-    address owner;  // Will allow to setup offchain initiator
     uint daoCount;
-    CRUD daos = new CRUD();
+    CRUD daos; 
 
     mapping(address => string) daoToCeramic;
-    modifier ownerOnly {require(msg.sender == owner); _;}
     modifier initiatorOnly {require(msg.sender == initiator); _;}
-
 
     event NewDao(string name, address indexed dao);
     event NewDeposit(uint daoId, address sender, uint deposit);
 
-    function setup(address _new_initiator) public ownerOnly {
+    function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
+
+    function setup(address _new_initiator) public onlyOwner {
         if (_new_initiator != address(0x0)) {
             initiator = _new_initiator;
         }
     }
 
-    // ToDo constructor is added to support non-upgradable deploy
-    constructor(address _owner, address _initiator) {
-        owner = _owner;
-        initiator = _initiator;
-    }
-
     // ToDo is it safe to make initial function public?
-    function initialize(address _owner, address _initiator) public initializer {
-        owner = _owner;
+    function initialize(address _initiator) public initializer {
+        //owner = _owner;
         initiator = _initiator;
+        daos = new CRUD();
     }
 
-    function new_dao(string memory _DAOname, string memory _ticker, uint _shares_amount) public payable returns(address) {
+    function new_dao(string memory _DAOname, 
+                    string memory _ticker, 
+                    uint _shares_amount) public payable returns(address) {
         daoCount++;
         //  Building the brand new DAO.
         DAO dao = new DAO();
