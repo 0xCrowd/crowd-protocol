@@ -20,7 +20,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     mapping(address => string) vaultToCeramic;
     modifier onlyInitiator {require(msg.sender == initiator); _;}
 
-    event NewVault(string name, address indexed vault);
+    event NewVault(string name, address indexed vault, address indexed tokenAddress);
     event NewDeposit(uint vaultId, address sender, uint deposit);
 
     function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
@@ -46,12 +46,13 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         // Create Vault and the pool inside of it.
         vault.initialize(_vaultName, _ticker, _shares_amount);
         address vaultAddr = address(vault);
+        address tokenAddress = vault.getTokenAddress();
          // Send eth to the pool.
         vault.recieveDeposit{value:msg.value}(msg.sender);
         console.log("Vault created at:", vaultAddr);
         // Add vault addres and vault ID to dynamic array.
         vaults.create(vaultCount, vaultAddr);
-        emit NewVault(_vaultName, vaultAddr);
+        emit NewVault(_vaultName, vaultAddr, tokenAddress);
         vaultCount++;
         //Return the address of the created Vault.
         return vaultAddr;

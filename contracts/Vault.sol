@@ -29,7 +29,7 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     mapping(address => uint) stakes; 
     vaultStorage vault;
     Stages public stage = Stages.IN_PROGRESS;
-    Token vaultToken;
+    Token public vaultToken;
     uint total;
 
     modifier onlyFull {require(stage ==  Stages.FULL, "The pool is not full yet!"); _;}
