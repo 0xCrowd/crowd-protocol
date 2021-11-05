@@ -65,6 +65,7 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable {
             users.push(_user);
         }
         // Update user stats.
+        total += msg.value; 
         userToEth[_user] += msg.value; 
     }
 
@@ -76,7 +77,7 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         return vaultToken.name();
     }
 
-    function getTokenTicket() public view onlyFull returns(string memory) {
+    function getTokenTicker() public view onlyFull returns(string memory) {
         return vaultToken.symbol();
     }
     
@@ -98,9 +99,9 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         stakes[stake_for] += _amount;
     }
 
-    function autoStake(uint _amount, address _stake_for) public onlyFull {
+    function autoStake(uint _amount, address _user) public onlyFull {
         //vaultToken.transferFrom(address(pool_contract), address(this), _amount);
-        stakes[_stake_for] += _amount;
+        stakes[_user] += _amount;
     }
 
     function getStake(address _user) public view onlyFull returns (uint){
