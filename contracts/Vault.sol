@@ -73,11 +73,11 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         return address(vaultToken);
     }
 
-    function getTokenName() public view onlyFull returns(string memory) {
+    function getTokenName() public view returns(string memory) {
         return vaultToken.name();
     }
 
-    function getTokenTicker() public view onlyFull returns(string memory) {
+    function getTokenTicker() public view returns(string memory) {
         return vaultToken.symbol();
     }
     

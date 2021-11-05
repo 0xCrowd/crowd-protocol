@@ -62,7 +62,6 @@ describe("Test Factory...", function(){
         expect(await vault.getStake(owner.address)).to.not.equal(0);
     });
     it("Check token name and ticker...", async function (){
-        await vault.goFullStage();
         expect(await vault.getTokenName()).to.equal(tokenName);
         expect(await vault.getTokenTicker()).to.equal(tokenTicker);
     });
