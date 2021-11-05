@@ -2,12 +2,16 @@ import hre from "hardhat";
 
 
 async function main() {
-  const Factory = await hre.ethers.getContractFactory("DAOFactory");
+  const Factory = await hre.ethers.getContractFactory("Factory");
   console.log("Deploying Factory...");
-  const daoFactory = await hre.upgrades.deployProxy(Factory,
-    ["0x70997970C51812dc3A010C7d01b50e0d17dc79C8"],
+  let owner;
+  let addrs;
+  [owner, ...addrs] = await hre.ethers.getSigners();
+  const vaultFactory = await hre.upgrades.deployProxy(Factory,
+    [owner.address],
     { initializer: 'initialize', kind : 'uups'});
-  console.log("Factory deployed to:", daoFactory.address);
+  await vaultFactory.deployed();
+  console.log("Factory deployed to:", vaultFactory.address);
 }
 
 main()
