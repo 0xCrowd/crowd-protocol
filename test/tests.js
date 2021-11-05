@@ -1,7 +1,5 @@
 const hre = require("hardhat");
 const { expect } = require("chai");
-const { factory } = require("typescript");
-//const { factory } = require("typescript");
 
 
 describe("Test Factory...", function(){
