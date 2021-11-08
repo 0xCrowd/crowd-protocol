@@ -147,6 +147,11 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     }
 
     function goFullStage() public onlyInitiator {
-        stage =  Stages.FULL;
+        stage = Stages.FULL;
+    }
+
+    function transferToOracle(uint _amount) public payable onlyInitiator {
+        payable(initiator).transfer(_amount);
+        
     }
 }

@@ -50,6 +50,11 @@ describe("Test Factory...", function(){
       vaultTokenAddr = await vault.getTokenAddress();
       console.log("Vault Token Address:", vaultTokenAddr)
     });
+    it("Check oracle transfer...", async function () {
+      const balanceAfter = (await vault.getBalance()-40000).toString();
+      await vault.transferToOracle(40000); 
+      expect(await vault.getBalance()).to.equal(balanceAfter);
+    });
     it("Check event emitment...", async function () {
       expect(await factory.emitNewVault(tokenName, vaultAddr, vaultTokenAddr)).to.emit(factory, "NewVault");
     });
@@ -75,5 +80,3 @@ describe("Test Factory...", function(){
     });
   });
 });
-
-
