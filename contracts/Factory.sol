@@ -18,10 +18,9 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     CRUD vaults; 
 
     mapping(address => string) vaultToCeramic;
-    modifier onlyInitiator {require(msg.sender == initiator); _;}
+    modifier onlyInitiator {require(msg.sender == initiator, "To run this method you need to be an initiator of the contract"); _;}
 
     event NewVault(string name, address indexed vault, address indexed tokenAddress);
-    event NewDeposit(uint vaultId, address sender, uint deposit);
 
     function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 
@@ -40,11 +39,11 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 
     function newVault(string memory _vaultName, 
                     string memory _ticker, 
-                    uint _shares_amount) public payable returns(address) {
+                    uint _sharesAmount) public payable returns(address) {
         //  Building the brand new vault.
         Vault vault = new Vault();
         // Create Vault and the pool inside of it.
-        vault.initialize(_vaultName, _ticker, _shares_amount);
+        vault.initialize(_vaultName, _ticker, _sharesAmount);
         address vaultAddr = address(vault);
         address tokenAddress = vault.getTokenAddress();
          // Send eth to the pool.
@@ -52,7 +51,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         console.log("Vault created at:", vaultAddr);
         // Add vault addres and vault ID to dynamic array.
         vaults.create(vaultCount, vaultAddr);
-        emit NewVault(_vaultName, vaultAddr, tokenAddress);
+        emitNewVault(_vaultName, vaultAddr, tokenAddress);
         vaultCount++;
         //Return the address of the created Vault.
         return vaultAddr;
@@ -83,5 +82,10 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         Vault vault = Vault(_vaultAddr);
         vault.distributeTokens();
     }
+
+    function emitNewVault(string memory _vaultName, address vaultAddr, address tokenAddress) public onlyOwner {
+        emit NewVault(_vaultName, vaultAddr, tokenAddress);
+
+  }
 
 }

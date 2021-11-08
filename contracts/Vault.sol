@@ -29,11 +29,13 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     mapping(address => uint) stakes; 
     vaultStorage vault;
     Stages public stage = Stages.IN_PROGRESS;
-    Token public vaultToken;
+    Token vaultToken;
     uint total;
 
+    event NewDeposit(address vaultAddr, address sender, uint deposit);
+
     modifier onlyFull {require(stage ==  Stages.FULL, "The pool is not full yet!"); _;}
-    modifier onlyInitiator {require(msg.sender == initiator); _;}
+    modifier onlyInitiator {require(msg.sender == initiator, "To run this method you need to be an initiator of the contract"); _;}
 
     function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 
@@ -67,6 +69,7 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         // Update user stats.
         total += msg.value; 
         userToEth[_user] += msg.value; 
+        emit NewDeposit(address(this), _user, msg.value);
     }
 
     function getTokenAddress() public view returns(address){

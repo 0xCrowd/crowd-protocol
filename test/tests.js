@@ -16,7 +16,7 @@ describe("Test Factory...", function(){
     // Deploy updradable Factory.
     factory = await hre.upgrades.deployProxy(this.Factory, [owner.address], 
                                 { initializer: 'initialize', kind : 'uups' });
-    
+    await factory.deployed();
     console.log("Factory deployed to:", factory.address);
     console.log("Factory owner:", owner.address);
 
@@ -31,6 +31,7 @@ describe("Test Factory...", function(){
   describe("Test Vault...", function () {
     let vaultAddr;
     let vault;
+    let vaultTokenAddr;
     before("Create a new Vault with the first deposit == 0.3 ETH...", async function () {
       await factory.newVault(tokenName, tokenTicker, 10, { value: hre.ethers.utils.parseEther("0.3")});
       // Vaults are stored in dynamic array by their serial number, starting with 0.
@@ -40,10 +41,17 @@ describe("Test Factory...", function(){
       const Vault = await hre.ethers.getContractFactory("Vault");
       vault = await Vault.attach(vaultAddr);
       console.log("Vault initiator before setup:", await vault.initiator())
-      // Setup vault initiator using factory as the factory contract if the owner of tha Vault.
+      // Setup vault initiator using factory as the factory contract is the owner of the Vault.
       await factory.setupVault(vaultAddr, owner.address);
       console.log("Vault initiator after setup:", await vault.initiator())
+      // Check the owner.
       expect(await vault.initiator()).to.equal(owner.address);
+      // Print vault address.
+      vaultTokenAddr = await vault.getTokenAddress();
+      console.log("Vault Token Address:", vaultTokenAddr)
+    });
+    it("Check event emitment...", async function () {
+      expect(await factory.emitNewVault(tokenName, vaultAddr, vaultTokenAddr)).to.emit(factory, "NewVault");
     });
     it("Check if the Factory is the owner of the Vault...", async function () {
       expect(await vault.owner()).to.equal(factory.address);
