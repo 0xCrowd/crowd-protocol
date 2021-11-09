@@ -83,7 +83,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         vault.distributeTokens();
     }
 
-    function emitNewVault(string memory _vaultName, address vaultAddr, address tokenAddress) public onlyOwner {
+    function emitNewVault(string memory _vaultName, address vaultAddr, address tokenAddress) public {
         emit NewVault(_vaultName, vaultAddr, tokenAddress);
 
   }
