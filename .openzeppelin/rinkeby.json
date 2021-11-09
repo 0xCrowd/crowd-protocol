@@ -15,6 +15,11 @@
       "address": "0x495cA91BB59101eF750ED6eEC3DF4b65199A245A",
       "txHash": "0x80b0dda204c4a1caa88c2d9bd61f9bdb0d415135b3541253f6bbcbb670d099a6",
       "kind": "uups"
+    },
+    {
+      "address": "0x1d8184919844D9c0defce62C7e1935983a4f1b61",
+      "txHash": "0x9626a4ba6dfb7c05aa6a09821ae352f5d7589f003102aac70274cdaba77e1770",
+      "kind": "uups"
     }
   ],
   "impls": {
@@ -221,6 +226,106 @@
     "fc6faca0cb2ad9df5e1974f80a7b8a559af051d8114a86a3fe576bc68c5c0184": {
       "address": "0x9792b7E76C85aee6484Fca19F9b574196A585C93",
       "txHash": "0x348254f8510872a3d4d8db0bd3149c80de8cff784586625ebf4890e7f6e43582",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "Factory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/Factory.sol:16"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaultCount",
+            "type": "t_uint256",
+            "src": "contracts/Factory.sol:17"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaults",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/Factory.sol:18"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaultToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/Factory.sol:20"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "94a03d7cd0bd44561c32b1b3a60d62e2142cee711ad27d7751e35e189f43e807": {
+      "address": "0x2a0C19333E1dA450D32b8fA5ac3Cc3f9BcD91088",
+      "txHash": "0xfdbd677f5ba7b9602a2a7b9b97bae2d8c364ae397fbcb482794e2111b73c7281",
       "layout": {
         "storage": [
           {

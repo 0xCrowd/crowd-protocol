@@ -48,10 +48,10 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         address tokenAddress = vault.getTokenAddress();
          // Send eth to the pool.
         vault.recieveDeposit{value:msg.value}(msg.sender);
+        emitNewVault(_vaultName, vaultAddr, tokenAddress);
         console.log("Vault created at:", vaultAddr);
         // Add vault addres and vault ID to dynamic array.
         vaults.create(vaultCount, vaultAddr);
-        emitNewVault(_vaultName, vaultAddr, tokenAddress);
         vaultCount++;
         //Return the address of the created Vault.
     }
