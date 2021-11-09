@@ -1,0 +1,1580 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [
+    {
+      "address": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+      "txHash": "0xdd368ae54afe124f143e8e07175ecf35f73dbceee6e6127774042df50ed71173",
+      "kind": "uups"
+    },
+    {
+      "address": "0xC32168F80bfC5651E1A8e59e6F5496d26886b369",
+      "txHash": "0xa411c7f276aed6b59685adf9ff2e42624ba2398f955becd6df97eb8f4647c710",
+      "kind": "uups"
+    },
+    {
+      "address": "0xd6CF7c339E7a5c17e7C57DaB14d9Dc42Ba0C2D49",
+      "txHash": "0xa7fb5e0d3cec4fd91699b2ebc739980eee49bd904df4ecad5c60013c7bbf4a80",
+      "kind": "uups"
+    },
+    {
+      "address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+      "txHash": "0xfea861be65ee9d4666ceab8d874083b5cb1fa3e308ae1e3b990f6511418c8b03",
+      "kind": "uups"
+    },
+    {
+      "address": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+      "txHash": "0xadae6eec29139bc2244911636e1239de3b53893cd5d4e04711842e55f14f75cd",
+      "kind": "uups"
+    },
+    {
+      "address": "0x0D74A7CD417303795E3C36201FEEC2DdDBD2a5c6",
+      "txHash": "0xfb1920c3e13804d87348ccc91044ed9fc0698c924f1c37d13d268113c6f34d65",
+      "kind": "uups"
+    },
+    {
+      "address": "0xb2322461A359f2cC47889fA2b255782beFf75705",
+      "txHash": "0x665316814e13a662ff31bc7ed115e65f0073680241bcb470ae61d6c11ef47657",
+      "kind": "uups"
+    },
+    {
+      "address": "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
+      "txHash": "0x3b9c1168cfff40d38cac86baf5c6566812327132b93f3d3b4e4d95640a016fce",
+      "kind": "uups"
+    },
+    {
+      "address": "0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f",
+      "txHash": "0x318757ba460732cd5c009f4f9376ee7c0fa3f407840df2c6bb176f164b7b7a6f",
+      "kind": "uups"
+    },
+    {
+      "address": "0x4A679253410272dd5232B3Ff7cF5dbB88f295319",
+      "txHash": "0x32b589615b580f09c252c24be4a25afaec1ff5dd7e51e4cc2cf8e2cc8d0ad4d7",
+      "kind": "uups"
+    },
+    {
+      "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      "txHash": "0x252bd346b4421d31be25780391ea9ab6e881af7ece137e9a2e0fce690c6d63d7",
+      "kind": "uups"
+    },
+    {
+      "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+      "txHash": "0x020b8dfd0f19f11d7ce08ac3bf3a5a8a3b50e87838e400643fe1fa43c4213185",
+      "kind": "uups"
+    },
+    {
+      "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      "txHash": "0x0247c1f1f409241aae015f2b1a5d93dc8a2c963bb68449b2a75e16a30400f5e8",
+      "kind": "uups"
+    },
+    {
+      "address": "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
+      "txHash": "0x2004d54950a9ea76e1507a0ce9fb2f1f43c287a15ff15089f09a393fa61f92b4",
+      "kind": "uups"
+    },
+    {
+      "address": "0x9A676e781A523b5d0C0e43731313A708CB607508",
+      "txHash": "0x4819bf103e5159d9354fc5ab32371618213cf2b7581c20777397de24a764ecf9",
+      "kind": "uups"
+    },
+    {
+      "address": "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE",
+      "txHash": "0x73c7eb2050e8a69c35208cff5e2d6e43cb41900625c1a7e64cf001b3e9dd5fd0",
+      "kind": "uups"
+    },
+    {
+      "address": "0x59b670e9fA9D0A427751Af201D676719a970857b",
+      "txHash": "0x9c20f14114bec777ec03dba53ac9f454409cc94e5fd5779755e2723d462dfd4f",
+      "kind": "uups"
+    },
+    {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "txHash": "0x2617143bbedebb165ee675f64dfeff2f24efcc9e47344fef98b1e90840e94aa8",
+      "kind": "uups"
+    },
+    {
+      "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      "txHash": "0x787c93a21e614491d7a59ed25e8d2de5e2adcdf4650402a6ed680178513f1ba5",
+      "kind": "uups"
+    },
+    {
+      "address": "0x47c5EF471475b2EdB950DF4a20E9e538f67F3fb3",
+      "txHash": "0xe3d24db535b63c43b846dac598c9b4d859ab2f0f362359f4200b13c06d0214e7",
+      "kind": "uups"
+    },
+    {
+      "address": "0x811ED2d787a4238b2ccf2339346383Fa3f31d0b0",
+      "txHash": "0x42388112875b4392c91d6880dc4eea06e1ebe1b402fabfbd3a77a42a59360f02",
+      "kind": "uups"
+    },
+    {
+      "address": "0xdcC99fDe906B5D8D5F5Ab0b8C1D0dA4dec54D91a",
+      "txHash": "0x3b27afdcad8fd497606a5cbe158d6ba328604666d860f8f28f875eab4e97124d",
+      "kind": "uups"
+    },
+    {
+      "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      "txHash": "0x4711983b884ed4624c830b176a8424701482e4f70af7f90d1abf51ddd077e022",
+      "kind": "uups"
+    }
+  ],
+  "impls": {
+    "0978bb369cf5c69734a03cb96c06d87f05b9df96ffe9a870323b6f6dbdba1be5": {
+      "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      "txHash": "0xd3b4de4f098dff12e4096b62825564352ae2dc1aea5080e934d9abf3c2f97388",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/DAOFactory.sol:12"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "owner",
+            "type": "t_address",
+            "src": "contracts/DAOFactory.sol:13"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoCount",
+            "type": "t_uint256",
+            "src": "contracts/DAOFactory.sol:14"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daos",
+            "type": "t_contract(CRUD)3788",
+            "src": "contracts/DAOFactory.sol:15"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)3788": {
+            "label": "contract CRUD"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "eb5f532b488bf82351bf27b689f710d877ec3300c925ba375cf4ac1101076fb5": {
+      "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      "txHash": "0x48af49b493bfa551ee718ab1e9a32bf19135bf3347668bebc59d2bd5480f1f02",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/DAOFactory.sol:15"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoCount",
+            "type": "t_uint256",
+            "src": "contracts/DAOFactory.sol:16"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daos",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/DAOFactory.sol:17"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/DAOFactory.sol:19"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "7c03862786fa5c82fe0b7210f8845f39398b9f4466dea3e55d3afd00466bf1f1": {
+      "address": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+      "txHash": "0x2b33c8d5abf318f9d1dcf90cbb78fedd0fe97ee5cda4c319425372a671760deb",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/DAOFactory.sol:15"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoCount",
+            "type": "t_uint256",
+            "src": "contracts/DAOFactory.sol:16"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daos",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/DAOFactory.sol:17"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/DAOFactory.sol:19"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "a9079952c7d8c1ac9829963e2dde317739d852b6f305d8a2243f63b02069b2da": {
+      "address": "0x1EAAeF10e3a37f17Fa56413842916C8d39C06244",
+      "txHash": "0xed280198cca2a8aa69438c2fb7cc2dc05d808b70ee73c8f030cde933ff359a30",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/DAOFactory.sol:15"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoCount",
+            "type": "t_uint256",
+            "src": "contracts/DAOFactory.sol:16"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daos",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/DAOFactory.sol:17"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/DAOFactory.sol:19"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "e3ecfc4f3ed4278e87688f26937c24690929ab9a2d8e1960403ebb0ee09c876d": {
+      "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      "txHash": "0xcaa582899e738bfd5a5428ae73255204fcaa1aebbc84a38435088576ca53333c",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/DAOFactory.sol:15"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoCount",
+            "type": "t_uint256",
+            "src": "contracts/DAOFactory.sol:16"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daos",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/DAOFactory.sol:17"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/DAOFactory.sol:19"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "16fe0879ef3d4dad97aecf8cbc883f4b232a8efe0ab8b8b0219b8ec4e195675e": {
+      "address": "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
+      "txHash": "0x1846e42acf07e7607201f3aaf4c83de3a2a2d566267d0fdf4ec9338a3196bc00",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/DAOFactory.sol:15"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoCount",
+            "type": "t_uint256",
+            "src": "contracts/DAOFactory.sol:16"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daos",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/DAOFactory.sol:17"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/DAOFactory.sol:19"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "6b44748d929f8c7c6b8f43a20fd92167e03c9e655cd1def7e209522f4e39f2bb": {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "txHash": "0x1b4694514274031341b1e21a192f7bfa32753198802074b0fbaba8c8251da23a",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/DAOFactory.sol:16"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoCount",
+            "type": "t_uint256",
+            "src": "contracts/DAOFactory.sol:17"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daos",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/DAOFactory.sol:18"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/DAOFactory.sol:20"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "69fd1da00bd10c06260104dcb576bce9eb30cc079e2b5eb6d19efdbfca188a3b": {
+      "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      "txHash": "0x23ec2970fe484b3abee076e12ad66ccee4cf29641230b42041fbc50912c06146",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/DAOFactory.sol:16"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoCount",
+            "type": "t_uint256",
+            "src": "contracts/DAOFactory.sol:17"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daos",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/DAOFactory.sol:18"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/DAOFactory.sol:20"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "59deb7d013450b3a3eced1f6606b7c96f5e279e64fbfb5a43f7e6803e474e7c9": {
+      "address": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+      "txHash": "0xe765db11edc506161bccc3ffb6ab2584b4eefd3186d31e16271b10fb27e01296",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/DAOFactory.sol:16"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoCount",
+            "type": "t_uint256",
+            "src": "contracts/DAOFactory.sol:17"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daos",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/DAOFactory.sol:18"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/DAOFactory.sol:20"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "7fb9cab964e1c5d4544d9bc96e15441ce4a92a26cee38de368f853bfac6117a0": {
+      "address": "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
+      "txHash": "0xbf1c4447bd53b1573d771842321edb812feb4dacf9e4af0423bfe0a413707853",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/DAOFactory.sol:16"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoCount",
+            "type": "t_uint256",
+            "src": "contracts/DAOFactory.sol:17"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daos",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/DAOFactory.sol:18"
+          },
+          {
+            "contract": "DAOFactory",
+            "label": "daoToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/DAOFactory.sol:20"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "2e114e4fb6ce765b362b12f746254a4f05334c28f043fc9a23398ce3bc518a2b": {
+      "address": "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
+      "txHash": "0x2c515b11d7af161d093ea38de11a3287bf574ad660a2b95c258635805a9df970",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "Factory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/Factory.sol:16"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaultCount",
+            "type": "t_uint256",
+            "src": "contracts/Factory.sol:17"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaults",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/Factory.sol:18"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaultToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/Factory.sol:20"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "28f9e51a92cf530886285024803d97ecc1b44b6805a40137f80ec04dde36497b": {
+      "address": "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
+      "txHash": "0x61a963899a591234f45c6dfb2d2c41ff0109435c72cea26e8d1bee55f52baae9",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "Factory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/Factory.sol:16"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaultCount",
+            "type": "t_uint256",
+            "src": "contracts/Factory.sol:17"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaults",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/Factory.sol:18"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaultToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/Factory.sol:20"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "0d42961dc71bb482567f9a3278894c7f0fe0eb384bdd78ca5ecf87f272a08d01": {
+      "address": "0x1AB8c98d679eEA2dba2917Fb26f1f2Ea23A71aB6",
+      "txHash": "0xf122d76f70d2d424e8777d3de910709a0708d4c96f499dca39ca4948211bc427",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "Factory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/Factory.sol:16"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaultCount",
+            "type": "t_uint256",
+            "src": "contracts/Factory.sol:17"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaults",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/Factory.sol:18"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaultToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/Factory.sol:20"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "7c7dcdb18dcd0312a00e6d86d7715393a2a649e3ef9b24c73ee041c4450ffec2": {
+      "address": "0x7Dc911480f48b97Cd6eE8828E6dbf97C49c3Fbe4",
+      "txHash": "0x7cb7b0b585cec4c800ac6ad9eb3b72e3cf0bddb7af7402a41d9ef551d482acc2",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "Factory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/Factory.sol:16"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaultCount",
+            "type": "t_uint256",
+            "src": "contracts/Factory.sol:17"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaults",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/Factory.sol:18"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaultToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/Factory.sol:20"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "fc6faca0cb2ad9df5e1974f80a7b8a559af051d8114a86a3fe576bc68c5c0184": {
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "txHash": "0xb09188013915c0c046b9d418627e6d19a1a57d3d8b4a67babb345b6066649dfc",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "Factory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/Factory.sol:16"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaultCount",
+            "type": "t_uint256",
+            "src": "contracts/Factory.sol:17"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaults",
+            "type": "t_contract(CRUD)1819",
+            "src": "contracts/Factory.sol:18"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaultToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/Factory.sol:20"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)1819": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    }
+  }
+}
