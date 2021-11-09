@@ -18,9 +18,9 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     CRUD vaults; 
 
     mapping(address => string) vaultToCeramic;
-    modifier onlyInitiator {require(msg.sender == initiator, "To run this method you need to be an initiator of the contract"); _;}
-
     event NewVault(string name, address indexed vault, address indexed tokenAddress);
+
+    modifier onlyInitiator {require(msg.sender == initiator, "To run this method you need to be an initiator of the contract"); _;}
 
     function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 
@@ -39,7 +39,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 
     function newVault(string memory _vaultName, 
                     string memory _ticker, 
-                    uint _sharesAmount) public payable returns(address) {
+                    uint _sharesAmount) public payable {
         //  Building the brand new vault.
         Vault vault = new Vault();
         // Create Vault and the pool inside of it.
@@ -54,7 +54,6 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         emitNewVault(_vaultName, vaultAddr, tokenAddress);
         vaultCount++;
         //Return the address of the created Vault.
-        return vaultAddr;
     }
 
     function delegateToCeramic(address _vaultAddress) public view returns(string memory) {
