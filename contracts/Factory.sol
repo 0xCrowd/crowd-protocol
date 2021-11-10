@@ -44,6 +44,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         Vault vault = new Vault();
         // Create Vault and the pool inside of it.
         vault.initialize(_vaultName, _ticker, _sharesAmount);
+        vault.setInitiator(initiator);
         address vaultAddr = address(vault);
         address tokenAddress = vault.getTokenAddress();
          // Send eth to the pool.
@@ -53,7 +54,6 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         // Add vault addres and vault ID to dynamic array.
         vaults.create(vaultCount, vaultAddr);
         vaultCount++;
-        //Return the address of the created Vault.
     }
 
     function delegateToCeramic(address _vaultAddress) public view returns(string memory) {

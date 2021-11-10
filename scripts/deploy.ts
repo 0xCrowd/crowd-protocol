@@ -8,7 +8,7 @@ async function main() {
   let addrs;
   [owner, ...addrs] = await hre.ethers.getSigners();
   const vaultFactory = await hre.upgrades.deployProxy(Factory,
-    [owner.address],
+    ["0x05d7473bF52920f925F4b8d9048409a88Bb4B562"],
     { initializer: 'initialize', kind : 'uups'});
   await vaultFactory.deployed();
   console.log("Factory deployed to:", vaultFactory.address);
