@@ -15,7 +15,7 @@ contract CRUD{
     }
    
     function read(uint _id) public view returns(address){
-        require(sequence[_id].id == _id);
+        require(sequence[_id].id == _id, "The vault with this index does not exist");
         return sequence[_id].addr;
     }
    
