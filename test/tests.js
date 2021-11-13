@@ -55,9 +55,6 @@ describe("Test Factory...", function(){
       await vault.transferToOracle(40000); 
       expect(await vault.getBalance()).to.equal(balanceAfter);
     });
-    it("Check event emitment...", async function () {
-      expect(await factory.emitNewVault(tokenName, vaultAddr, vaultTokenAddr)).to.emit(factory, "NewVault");
-    });
     it("Check if the Factory is the owner of the Vault...", async function () {
       expect(await vault.owner()).to.equal(factory.address);
     });

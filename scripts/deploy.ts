@@ -1,7 +1,7 @@
 import hre from "hardhat";
 
 
-async function main() {
+async function main(): Promise<void> {
   const Factory = await hre.ethers.getContractFactory("Factory");
   console.log("Deploying Factory...");
   let owner;

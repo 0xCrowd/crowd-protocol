@@ -33,9 +33,10 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     uint total;
 
     event NewDeposit(address vaultAddr, address sender, uint deposit);
+    event TransferToOracle(address indexed vaultAddr, address indexed oracleAddr, uint amount);
 
     modifier onlyFull {require(stage ==  Stages.FULL, "The pool is not full yet!"); _;}
-    modifier onlyInitiator {require(msg.sender == initiator, "To run this method you need to be an initiator of the contract"); _;}
+    modifier onlyInitiator {require(msg.sender == initiator, "To run this method you need to be an initiator of the contract."); _;}
 
     function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 
@@ -92,14 +93,14 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         return address(this).balance;
     }
 
-    function stake(uint _amount, 
-                  address stake_for, 
-                  address _user) public onlyFull {
-        if (vaultToken.allowance(_user, address(this)) < _amount) {
+    function stake(uint _amount) public onlyFull {
+        /*
+        */              
+        if (vaultToken.allowance(msg.sender, address(this)) < _amount) {
             vaultToken.approve(address(this), _amount);
         }
-        vaultToken.transferFrom(_user, address(this), _amount);
-        stakes[stake_for] += _amount;
+        vaultToken.transferFrom(msg.sender, address(this), _amount);
+        stakes[msg.sender] += _amount;
     }
 
     function autoStake(uint _amount, address _user) public onlyFull {
@@ -112,6 +113,7 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     }
 
     function claim(uint _amount, address _user) public onlyFull {  // 50
+        require(msg.sender == _user);
         uint userStake = stakes[_user];  // 2
         if (userStake < _amount) {  // 2*50 < 50
             vaultToken.transfer(_user, userStake);
@@ -136,7 +138,6 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     
     function distributeTokens() public onlyFull onlyOwner {
         /*
-        
         */
         uint k = vaultToken.totalSupply() / total;
         vaultToken.approve(address(this), vaultToken.totalSupply());
@@ -150,8 +151,16 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         stage = Stages.FULL;
     }
 
+    function withdrawDeposit(uint _amount) public {
+        require(userToEth[msg.sender] > 0, "The user has no deposit");
+        require(userToEth[msg.sender] >= _amount, "Not enough deposit on user's balance");
+        userToEth[msg.sender] -= _amount;
+        payable(msg.sender).transfer(_amount);
+    }
+
     function transferToOracle(uint _amount) public payable onlyInitiator {
         payable(initiator).transfer(_amount);
+        emit TransferToOracle(address(this), initiator, _amount);
         
     }
 }
