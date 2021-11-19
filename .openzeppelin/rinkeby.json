@@ -1072,6 +1072,106 @@
           }
         }
       }
+    },
+    "a562519207987386743a7243f79ecc3a521beba8261d570f28486e32eb81552c": {
+      "address": "0xA136930fd6Af2343B15fE8B4f7a2A4C26FCDC026",
+      "txHash": "0x7ca00805325a3af4f29a8d9beb6065128c400e23ba50cb5b18c501502005cda2",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "Factory",
+            "label": "initiator",
+            "type": "t_address",
+            "src": "contracts/Factory.sol:16"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaultCount",
+            "type": "t_uint256",
+            "src": "contracts/Factory.sol:17"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaults",
+            "type": "t_contract(CRUD)3598",
+            "src": "contracts/Factory.sol:18"
+          },
+          {
+            "contract": "Factory",
+            "label": "vaultToCeramic",
+            "type": "t_mapping(t_address,t_string_storage)",
+            "src": "contracts/Factory.sol:20"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_contract(CRUD)3598": {
+            "label": "contract CRUD"
+          },
+          "t_mapping(t_address,t_string_storage)": {
+            "label": "mapping(address => string)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
     }
   }
 }

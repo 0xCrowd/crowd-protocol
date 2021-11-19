@@ -7,6 +7,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "hardhat/console.sol";
@@ -217,6 +218,15 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
         erc721.balanceAfter = getBalance()+msg.value;
     }
 
+    function recieveTokenPayment() public payable atStage(Stages.ONSALE) transitionAfter {
+        erc721.balanceAfter = getBalance()+msg.value;
+    }
+
+    function tokenToInitiator() public atStage(Stages.ONSALE) onlyInitiator {
+        ERC721 nftContract = ERC721(erc721.nftContract);
+        nftContract.safeTransferFrom(address(this), initiator, 1);
+    }
+
    function setTokenPrice(uint256 _price) public onlyInitiator atStage(Stages.ONSALE) {
        erc721.price = _price;
        priceSet = true;
@@ -236,4 +246,17 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
         erc721.data = data;
         return this.onERC721Received.selector;
     }
+
+    /*
+    function onERC1155Received(address operator,
+                              address from,
+                              uint256 tokenId,
+                              bytes calldata data) public atStage(Stages.FULL) transitionAfter override returns (bytes4) {
+        erc721.nftContract = msg.sender;
+        erc721.seller = from;
+        erc721.tokenId = tokenId;
+        erc721.data = data;
+        return this.onERC1155Received.selector;
+    }
+    */
 }
