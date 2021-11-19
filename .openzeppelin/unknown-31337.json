@@ -113,7 +113,7 @@
     },
     {
       "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-      "txHash": "0xe981a4990fd612db54f19b69810b1a7372e4dde3b0e6905dc936f290add0070c",
+      "txHash": "0xb546cc3a7081d34501026c3f1efcdfa6c766c6009c96e868b3e5ab2f44dd32cc",
       "kind": "uups"
     }
   ],
@@ -1476,9 +1476,9 @@
         }
       }
     },
-    "6747765ac0358d0228a3810f09e3c47877b4e5692975ab33df3a0d4728838af4": {
+    "b535a5d03bd1bed6a0040b8e169e83f07b0d716c4263a5e0cb8b319f08a65996": {
       "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-      "txHash": "0x7cb2ed34e2c131165c2187e69f3483f09497c436c634ae2b65b22baceeb63c22",
+      "txHash": "0x26b01af822abad5d354f5fba03b4aebbdcbcb866ea1f54924680986dd6e8e00d",
       "layout": {
         "storage": [
           {
@@ -1538,7 +1538,7 @@
           {
             "contract": "Factory",
             "label": "vaults",
-            "type": "t_contract(CRUD)1820",
+            "type": "t_contract(CRUD)3557",
             "src": "contracts/Factory.sol:18"
           },
           {
@@ -1555,7 +1555,7 @@
           "t_uint256": {
             "label": "uint256"
           },
-          "t_contract(CRUD)1820": {
+          "t_contract(CRUD)3557": {
             "label": "contract CRUD"
           },
           "t_mapping(t_address,t_string_storage)": {
