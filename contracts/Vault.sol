@@ -5,7 +5,8 @@ import "./CRUD.sol";
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
@@ -13,7 +14,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "hardhat/console.sol";
 
 
-contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Receiver {
+contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Receiver, IERC1155Receiver {
     /* 
     Right now there are 2 stages of funding process:
     */ 
@@ -26,11 +27,11 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
         address[] erc20;  // Locked ERC20
     }
 
-    struct Erc721Storage {
-            address nftContract;
+    struct TokenStorage {
+            address tokenAddr;
             address seller;
             uint256 tokenId;
-            bytes data;
+            uint8 tokenType;
             uint price;
             address buyer;
             uint balanceAfter;
@@ -42,7 +43,7 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
     mapping(address => uint) stakes;
 
     vaultStorage vault;
-    Erc721Storage erc721;
+    TokenStorage tokenStorage;
 
     Token vaultToken;
     uint total;
@@ -60,7 +61,7 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
     
     modifier transitionAfter() {
         _;
-        nextStage();
+        _nextStage();
     }
 
     modifier onlyInitiator {require(msg.sender == initiator, "To run this method you need to be an initiator of the contract."); _;}
@@ -101,18 +102,17 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
         emit NewDeposit(address(this), _user, msg.value);
     } 
 
-    /* _________GETTERS_________
-    */
+    /* _________GETTERS_________ */
 
-    function getTokenAddress() public view returns(address){
+    function getERC20TokenAddress() public view returns(address){
         return address(vaultToken);
     }
 
-    function getTokenName() public view returns(string memory) {
+    function getERC20TokenName() public view returns(string memory) {
         return vaultToken.name();
     }
 
-    function getTokenTicker() public view returns(string memory) {
+    function getERC20TokenTicker() public view returns(string memory) {
         return vaultToken.symbol();
     }
     
@@ -128,12 +128,12 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
         return stakes[_user];
     }
 
-    function getErc721Price() public view atStage(Stages.ONSALE) returns (uint){
-        return erc721.price;
+    function getTokenPrice() public view atStage(Stages.ONSALE) returns (uint){
+        return tokenStorage.price;
     }
 
-    function getErc721Address() public view atStage(Stages.ONSALE) returns (address){
-        return erc721.nftContract;
+    function getTokenAddress() public view atStage(Stages.ONSALE) returns (address){
+        return tokenStorage.tokenAddr;
     }
 
 
@@ -192,7 +192,7 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
     function withdrawFinal() public atStage(Stages.SOLD) {
         require(userToEth[msg.sender] > 0, "This user is not a participant.");
         uint factor = total / userToEth[msg.sender];
-        uint amount = erc721.balanceAfter / factor;
+        uint amount = tokenStorage.balanceAfter / factor;
         payable(msg.sender).transfer(amount);
     }
 
@@ -208,27 +208,22 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
         emit TransferToOracle(address(this), initiator, _amount);
         
     }
-
-    function sellERC721(address _to) public atStage(Stages.ONSALE) transitionAfter payable {
-        require(erc721.price==msg.value, "Send the accurate price of the asset!");
-        require(priceSet==true, "The price is not set!");
-        ERC721 nftContract = ERC721(erc721.nftContract);
-        nftContract.safeTransferFrom(address(this), _to, 1);
-        erc721.buyer = _to;
-        erc721.balanceAfter = getBalance()+msg.value;
-    }
-
-    function recieveTokenPayment() public payable atStage(Stages.ONSALE) transitionAfter {
-        erc721.balanceAfter = getBalance()+msg.value;
+    function recieveTokenPayment() public payable atStage(Stages.ONSALE) onlyInitiator transitionAfter {
+        tokenStorage.balanceAfter = getBalance()+msg.value;
     }
 
     function tokenToInitiator() public atStage(Stages.ONSALE) onlyInitiator {
-        ERC721 nftContract = ERC721(erc721.nftContract);
-        nftContract.safeTransferFrom(address(this), initiator, 1);
+        if (tokenStorage.tokenType == 1) {
+            IERC721 nftContract = IERC721(tokenStorage.tokenAddr);
+            nftContract.safeTransferFrom(address(this), initiator, tokenStorage.tokenId);
+        } else {
+            IERC1155 nftContract = IERC1155(tokenStorage.tokenAddr);
+            bytes memory data;
+            nftContract.safeTransferFrom(address(this), initiator, tokenStorage.tokenId, 1, data);
     }
-
+}
    function setTokenPrice(uint256 _price) public onlyInitiator atStage(Stages.ONSALE) {
-       erc721.price = _price;
+       tokenStorage.price = _price;
        priceSet = true;
    }
 
@@ -236,27 +231,46 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
         stage = Stages(uint(stage) + 1);
     }
 
-    function onERC721Received(address operator,
-                              address from,
-                              uint256 tokenId,
-                              bytes calldata data) public atStage(Stages.FULL) transitionAfter override returns (bytes4) {
-        erc721.nftContract = msg.sender;
-        erc721.seller = from;
-        erc721.tokenId = tokenId;
-        erc721.data = data;
+    function _nextStage() private  {
+        stage = Stages(uint(stage) + 1);
+    }
+
+    function onERC721Received(
+        address operator, /*operator*/
+        address from, /*from*/
+        uint256 tokenId,
+        bytes calldata data /*data*/
+    ) external atStage(Stages.FULL) transitionAfter override returns (bytes4) {
+        tokenStorage.tokenAddr = msg.sender;
+        tokenStorage.seller = from;
+        tokenStorage.tokenId = tokenId;
+        tokenStorage.tokenType = 1;
         return this.onERC721Received.selector;
     }
 
-    /*
     function onERC1155Received(address operator,
                               address from,
                               uint256 tokenId,
-                              bytes calldata data) public atStage(Stages.FULL) transitionAfter override returns (bytes4) {
-        erc721.nftContract = msg.sender;
-        erc721.seller = from;
-        erc721.tokenId = tokenId;
-        erc721.data = data;
+                              uint256 value,
+                              bytes calldata data) external atStage(Stages.FULL) transitionAfter override returns (bytes4) {
+        tokenStorage.tokenAddr = msg.sender;
+        tokenStorage.seller = from;
+        tokenStorage.tokenId = tokenId;
+        tokenStorage.tokenType = 2;
         return this.onERC1155Received.selector;
     }
-    */
+
+    function onERC1155BatchReceived(
+        address operator,
+        address from,
+        uint256[] calldata ids,
+        uint256[] calldata values,
+        bytes calldata data
+        ) external override returns(bytes4){
+        return this.onERC1155BatchReceived.selector;
+        }
+
+    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+        return interfaceId == type(IERC165).interfaceId;
+    }
 }

@@ -44,7 +44,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         vault.initialize(_vaultName, _ticker, _sharesAmount);
         vault.setInitiator(initiator);
         address vaultAddr = address(vault);
-        address tokenAddress = vault.getTokenAddress();
+        address tokenAddress = vault.getERC20TokenAddress();
          // Send eth to the pool.
         vault.recieveDeposit{value:msg.value}(msg.sender);
         emit NewVault(_vaultName, vaultAddr, tokenAddress);
