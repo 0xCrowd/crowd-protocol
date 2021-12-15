@@ -20,7 +20,6 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
     */ 
     address public initiator;  // Offchain initiator
     // cбор, сбор закончен, сбор отменен
-    enum Stages{ IN_PROGRESS, FULL, LOCKED, ONSALE, SOLD }
 
     struct vaultStorage {
         mapping(address => bool) assetLocked;
@@ -32,7 +31,6 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
             address seller;
             uint256 tokenId;
             uint8 tokenType;
-            uint price;
             address buyer;
             uint balanceAfter;
         }
@@ -47,12 +45,19 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
 
     Token vaultToken;
     uint total;
-    bool private priceSet;
-
-    Stages public stage = Stages.IN_PROGRESS;
 
     event NewDeposit(address vaultAddr, address sender, uint deposit);
     event TransferToOracle(address indexed vaultAddr, address indexed oracleAddr, uint amount);
+
+    modifier onlyInitiator {require(msg.sender == initiator, "To run this method you need to be an initiator of the contract."); _;}
+
+    /*
+    ___________STAGE CONTROLLING OPERATIONS________________
+    */
+
+    enum Stages{ IN_PROGRESS, FULL, LOCKED, ONSALE, SOLD }
+
+    Stages public stage = Stages.IN_PROGRESS;
 
     modifier atStage(Stages _stage) {
         require(stage == _stage);
@@ -64,7 +69,18 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
         _nextStage();
     }
 
-    modifier onlyInitiator {require(msg.sender == initiator, "To run this method you need to be an initiator of the contract."); _;}
+    function nextStage() public onlyInitiator {
+        stage = Stages(uint(stage) + 1);
+    }
+
+    function _nextStage() private  {
+        stage = Stages(uint(stage) + 1);
+    }
+
+    /*
+    ___________INITIALIZATION AND UPGRADE________________
+    */
+
 
     function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 
@@ -86,9 +102,9 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
                 _shares_amount,  // ToDo initialize: We should discuss the amount of minted shares.
                 address(this));
         // Get token address.
-        address tokenAddress = address(vaultToken); 
+        address erc20Address = address(vaultToken); 
         //Add asset to the list of all assets.
-        addErc20Asset(tokenAddress);
+        addErc20Asset(erc20Address);
     }
 
     function recieveDeposit(address _user) public payable atStage(Stages.IN_PROGRESS) {
@@ -119,6 +135,10 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
     function getUserDeposit(address _user) public view returns(uint) {
         return userToEth[_user];
     }
+
+    function getTotal() external view returns(uint) {
+        return total;
+    }
     
     function getBalance() public view returns (uint){
         return address(this).balance;
@@ -128,28 +148,21 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
         return stakes[_user];
     }
 
-    function getTokenPrice() public view atStage(Stages.ONSALE) returns (uint){
-        return tokenStorage.price;
-    }
-
     function getTokenAddress() public view atStage(Stages.ONSALE) returns (address){
         return tokenStorage.tokenAddr;
     }
 
-
-    /* __________________________
-    */
-
-    function stake(uint _amount) public atStage(Stages.FULL) {
+    function getErc20Assets() public view atStage(Stages.FULL) returns(address[] memory) {
         /*
-        */              
-        if (vaultToken.allowance(msg.sender, address(this)) < _amount) {
-            vaultToken.approve(address(this), _amount);
-        }
-        vaultToken.transferFrom(msg.sender, address(this), _amount);
-        stakes[msg.sender] += _amount;
+        Get locked assets. UI should iterate over them checking the owner is this vault.
+        */
+        return vault.erc20;
     }
 
+
+    /* ___________CONTROL TOKENS OPERATIONS_______________
+    */
+    
     function autoStake(uint _amount, address _user) public atStage(Stages.FULL) {
         //vaultToken.transferFrom(address(pool_contract), address(this), _amount);
         stakes[_user] += _amount;
@@ -158,26 +171,15 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
     function claimTokens(uint _amount, address _user) public atStage(Stages.FULL) {  // 50
         require(msg.sender == _user);
         uint userStake = stakes[_user];  // 2
-        if (userStake < _amount) {  // 2*50 < 50
+        if (userStake < _amount) {
+            stakes[_user] -= userStake; // 2*50 < 50
             vaultToken.transfer(_user, userStake);
         } else {
+            stakes[_user] -= _amount;
             vaultToken.transfer(_user, _amount);
             }
     }
 
-    function addErc20Asset(address _assetAddress) public onlyOwner {  
-        require(vault.assetLocked[_assetAddress] == false, "This asset is already locked");
-        vault.erc20.push(_assetAddress);
-        vault.assetLocked[_assetAddress] = true;
-    }
-    
-    function getErc20Assets() public view atStage(Stages.FULL) returns(address[] memory) {
-        /*
-        Get locked assets. UI should iterate over them checking the owner is this vault.
-        */
-        return vault.erc20;
-    }
-    
     function distributeTokens() public atStage(Stages.FULL) onlyOwner {
         /*
         */
@@ -188,6 +190,13 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
             autoStake(userToEth[recipient]*k, recipient);
         }
     }
+
+    function addErc20Asset(address _assetAddress) public onlyOwner {  
+        require(vault.assetLocked[_assetAddress] == false, "This asset is already locked");
+        vault.erc20.push(_assetAddress);
+        vault.assetLocked[_assetAddress] = true;
+    }
+    
 
     function withdrawFinal() public atStage(Stages.SOLD) {
         require(userToEth[msg.sender] > 0, "This user is not a participant.");
@@ -209,6 +218,7 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
         
     }
     function recieveTokenPayment() public payable atStage(Stages.ONSALE) onlyInitiator transitionAfter {
+        // Get the payment after successful NFT sale.
         tokenStorage.balanceAfter = getBalance()+msg.value;
     }
 
@@ -222,25 +232,16 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
             nftContract.safeTransferFrom(address(this), initiator, tokenStorage.tokenId, 1, data);
     }
 }
-   function setTokenPrice(uint256 _price) public onlyInitiator atStage(Stages.ONSALE) {
-       tokenStorage.price = _price;
-       priceSet = true;
-   }
 
-    function nextStage() public onlyInitiator {
-        stage = Stages(uint(stage) + 1);
-    }
+    /* 
+    ___________NFT HOLDERS_______________
+    */
 
-    function _nextStage() private  {
-        stage = Stages(uint(stage) + 1);
-    }
-
-    function onERC721Received(
-        address operator, /*operator*/
-        address from, /*from*/
-        uint256 tokenId,
-        bytes calldata data /*data*/
-    ) external atStage(Stages.FULL) transitionAfter override returns (bytes4) {
+    function onERC721Received(address operator, /*operator*/
+                            address from, /*from*/
+                            uint256 tokenId,
+                            bytes calldata data
+                            ) external atStage(Stages.FULL) transitionAfter override returns (bytes4) {
         tokenStorage.tokenAddr = msg.sender;
         tokenStorage.seller = from;
         tokenStorage.tokenId = tokenId;
@@ -252,7 +253,8 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
                               address from,
                               uint256 tokenId,
                               uint256 value,
-                              bytes calldata data) external atStage(Stages.FULL) transitionAfter override returns (bytes4) {
+                              bytes calldata data
+                              ) external atStage(Stages.FULL) transitionAfter override returns (bytes4) {
         tokenStorage.tokenAddr = msg.sender;
         tokenStorage.seller = from;
         tokenStorage.tokenId = tokenId;
@@ -260,13 +262,11 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
         return this.onERC1155Received.selector;
     }
 
-    function onERC1155BatchReceived(
-        address operator,
-        address from,
-        uint256[] calldata ids,
-        uint256[] calldata values,
-        bytes calldata data
-        ) external override returns(bytes4){
+    function onERC1155BatchReceived(address operator,
+                                address from,
+                                uint256[] calldata ids,
+                                uint256[] calldata values,
+                                bytes calldata data) external override returns(bytes4){
         return this.onERC1155BatchReceived.selector;
         }
 
