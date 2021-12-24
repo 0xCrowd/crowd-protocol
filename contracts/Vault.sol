@@ -139,9 +139,9 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
     function getTotal() external view returns(uint) {
         return total;
     }
-    
-    function getBalance() public view returns (uint){
-        return address(this).balance;
+
+    function getUsersNum() external view returns(uint) {
+        return users.length;
     }
 
     function getStake(address _user) public view atStage(Stages.FULL) returns (uint){
@@ -219,7 +219,7 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
     }
     function recieveTokenPayment() public payable atStage(Stages.ONSALE) onlyInitiator transitionAfter {
         // Get the payment after successful NFT sale.
-        tokenStorage.balanceAfter = getBalance()+msg.value;
+        tokenStorage.balanceAfter = address(this).balance+msg.value;
     }
 
     function tokenToInitiator() public atStage(Stages.ONSALE) onlyInitiator {
