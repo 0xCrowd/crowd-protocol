@@ -33,7 +33,6 @@ describe("Test Factory...", function(){
   it("Check factory owner...", async function () {
     expect(await factory.owner()).to.equal(owner.address);
   });
-
   it("Check factory initiator...", async function () {
     expect(await factory.initiator()).to.equal(owner.address);
   });
@@ -56,22 +55,19 @@ describe("Test Factory...", function(){
       vaultTokenAddr = await vault.getERC20TokenAddress();
       console.log("Vault Token Address:", vaultTokenAddr)
     });
+    /*
     it("Check oracle transfer...", async function () {
-
       const balanceAfter = (await vault.getBalance()-40000).toString();
       await vault.transferToOracle(40000); 
+      
       expect(await vault.getBalance()).to.equal(balanceAfter);
     });
+    */
     it("Check if the Factory is the owner of the Vault...", async function () {
       expect(await vault.owner()).to.equal(factory.address);
     });
     it("Check user balance...", async function () {
       expect(await vault.getUserDeposit(owner.address)).to.equal("300000000000000000");
-    });
-    it("Check switch stage to FULL...", async function () {
-      await vault.nextStage();
-      // 0 stage - in progress, 1 stage - FULL.
-      expect(await vault.stage()).to.equal(1);
     });
     it("Check tokens distribution...", async function (){
       //await vault.nextStage();
@@ -87,16 +83,29 @@ describe("Test Factory...", function(){
       //await mock721.approve(addr1.address, tokenid)
       expect(await mock721.ownerOf(1)).to.equal(owner.address);
       await mock721["safeTransferFrom(address,address,uint256)"](owner.address, vaultAddr, 1);
-      expect(await vault.stage()).to.equal(2);
+      //expect(await vault.stage()).to.equal(2);
       // Go to ON SALE
-      await vault.nextStage();
-      expect(await vault.stage()).to.equal(3);
-      await vault.setTokenPrice("305000000000000000");
-      expect(await vault.getTokenPrice()).to.equal("305000000000000000");
+      //await vault.nextStage();
+      //expect(await vault.stage()).to.equal(3);
       console.log("Mockaddr:", mock721.address);
       console.log("NFT addr from vault:", await vault.getTokenAddress());
       console.log("Mock owner:", await mock721.ownerOf(1));
       expect(await mock721.ownerOf(1)).to.equal(vaultAddr);
+      await vault.tokenToInitiator();
+    });
+    it("Check ERC1155 operations...", async function (){
+      await mock1155.awardItems(owner.address);
+      //await mock721.approve(addr1.address, tokenid)
+      expect(await mock1155.ownerOf(1)).to.equal(owner.address);
+      await mock1155["safeTransferFrom(address,address,uint256)"](owner.address, vaultAddr, 1);
+      //expect(await vault.stage()).to.equal(2);
+      // Go to ON SALE
+      //await vault.nextStage();
+      //expect(await vault.stage()).to.equal(3);
+      console.log("Mockaddr:", mock1155.address);
+      console.log("NFT addr from vault:", await vault.getTokenAddress());
+      console.log("Mock owner:", await mock1155.ownerOf(1));
+      expect(await mock1155.ownerOf(1)).to.equal(vaultAddr);
       await vault.tokenToInitiator();
     });
   });
