@@ -171,11 +171,12 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
     }
     
 
-    function withdrawFinal() public {
-        require(userToEth[msg.sender] > 0, "This user is not a participant.");
-        uint factor = total / userToEth[msg.sender];
-        uint amount = tokenStorage.balanceAfter / factor;
-        payable(msg.sender).transfer(amount);
+    function getUserFraction(address user) public view returns (uint){
+        require(userToEth[user] > 0, "This user is not a participant.");
+        uint factor = total / userToEth[user];
+        return factor;
+        //uint amount = tokenStorage.balanceAfter / factor;
+        //payable(msg.sender).transfer(amount);
     }
 
     function withdrawDeposit(uint _amount) public {
@@ -206,11 +207,7 @@ contract Vault is Initializable, OwnableUpgradeable, UUPSUpgradeable, IERC721Rec
         }
     }
 
-    function allowInitiator() public onlyInitiator {
-        // Get token ABI.
-        
-    }
-
+    function allowInitiator() public onlyInitiator {}
     /* 
     ___________NFT HOLDERS_______________
     */
